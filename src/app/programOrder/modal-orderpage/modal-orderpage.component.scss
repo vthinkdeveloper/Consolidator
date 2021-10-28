@@ -1,0 +1,404 @@
+@import '../../../variable.scss';
+:root {
+    /* Not my favorite that line-height has to be united, but needed */
+    --lh: 1.4rem;
+  }
+
+.totalcostdiv {
+    
+    background-color: #e0ecfa;
+    color: var(--app-font-color);
+    font-family: $font-family-bold;
+    font-size: 22px;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center;
+    margin: auto;
+    .totalcost{
+        font-size: 14px;
+    }
+    justify-content: center;
+    padding-top: 4%;
+    padding-bottom: 4%;
+    min-width: 212px;
+    height: 102px;
+    padding-top: 32px;
+    padding-bottom: 28px;
+  }
+  .itemname{
+    color: var(--app-primarytext-color);
+    font-family: $font-family-bold;
+    font-size: 28px;
+    letter-spacing: 0;
+    line-height: 41px;
+  }
+  .example-container {
+    //   height: 260px;
+      overflow: auto;
+      min-width: 442px;
+  }
+  .rowlbl{
+    color: var(--app-primarytext-color);
+    font-family: $font-family-regular;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 19px;
+  }
+  
+  .rowunitprice{
+    text-align: left;
+}
+  .rowvalue{
+    color: var(--app-font-color);
+    font-family: $font-family-bold;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center; 
+    padding-top: 4px;   
+  }
+
+  .unitprice{
+      text-align: left !important;
+  }
+
+  .itemdetails{
+      padding-top: 3%;
+  }
+
+  .selectedaddrlbl{
+      padding-top: 46px;
+      color: var(--app-primarytext-color);
+      font-family: $font-family-bold;
+      font-size: 22px;
+      letter-spacing: 0;
+      line-height: 26px;
+      padding-bottom: 16px;
+  }
+  .search-box{
+      margin-left: 0px;
+  }
+  .search-icon{
+      left: 16px;
+  }
+  .pagination-item {
+    color: var(--app-primarytext-color);
+    font-family: $font-family-medium;
+    font-size: 14px;
+    text-align: center;
+  }
+  .selectedPage {
+    background: var(--app-background-color);
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center;
+    padding-top: 5px;
+  }
+  .pagination-icons {
+    transform: scale(2.5,2.5);
+    margin: 25px;
+  }
+  .search-box{    
+    height: 40px;
+    border: 1px solid #DEDEDE;
+    border-radius: 3px;
+    margin-bottom: 15px;
+    outline:none;
+    padding-left: 40px;
+}
+
+.circle{
+    border: 1px solid var(--app-background-color);
+    box-shadow: inset 1px 1px 3px #fff;
+    width: 22px;
+    height: 22px;
+    border-radius: 100%;
+    position: relative;
+    margin: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    background: #fff;
+	margin-left:0px !important;
+	outline:none !important;
+}
+
+.circle:before,
+.circle:after{
+    content:'';position:absolute;top:0;left:0;right:0;bottom:0;
+}
+/* PLUS */
+.circle.plus:before,
+.circle.plus:after {
+    background:var(--app-background-color);   
+}
+.circle.plus:before{
+    width: 2px;
+    margin: 3px auto;
+}
+.circle.plus:after{
+    margin: auto 3px;
+    height: 2px;
+    box-shadow: none;	
+}
+/* MINUS */
+.circle.minus:before{
+    background: var(--app-background-color);
+    margin: auto 5px;
+    height: 2px;    
+}
+
+.txtqty {
+    border:1px solid #efeaea;
+    border-radius:3px;
+    text-align:center;
+    margin-right: 5px;
+    margin-left: 5px;
+    width: 54px;
+    height: 35px;
+}
+
+.placeholder
+    {
+      position: relative;
+      display: inline;    
+      padding: 4px 0px 4px 0px;
+      width: 44%;
+    }
+
+.placeholder::after
+{
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    content: attr(data-placeholder);
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.disableclass{
+  pointer-events: none;
+}
+.mat-cell{
+    font-family: $font-family;
+    color: #121212 !important;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center;
+    justify-content: center;
+    padding-left: 0px;
+  }
+  .mat-header-cell {   
+    color: var(--app-primarytext-color) !important;
+    font-family: $font-family-bold;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 22px;
+    justify-content: center;
+    padding-left: 0px;
+}
+
+.companyname{
+    font-family: $font-family-bold;
+}
+
+.leftalign{
+    text-align: left !important;
+}
+
+.table-row {
+  max-height: calc(100% - 160px);
+}
+
+.mat-column-companyName, .mat-column-contactName, .mat-column-addressLine1{
+    text-align: left !important;
+    justify-content: left;
+}
+
+.btnsavechanges{
+    height: 45px;
+    width: 160px; 
+    background-color: var(--app-background-color) !important;
+    color: #FFFFFF;
+    font-family: $font-family-bold;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 24px;
+}
+.btncancelchanges{
+    height: 45px;
+    width: 160px; 
+    background-color: var(--app-selection-background-color) !important;
+    color: var(--app-background-color);
+    font-family: $font-family-bold;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 24px;
+    margin-right: 45px;
+}
+.btndiv{
+    text-align: right;
+    margin-bottom: 6%;
+}
+
+.closepopup{
+    position: absolute;
+    right: 0px;
+    top: 0px;
+    background: white !important;
+    cursor: pointer;
+    padding-right: 35px;
+    padding-top: 17px;
+    padding-right: 17px;
+}
+
+.clearclass{
+    color: #006AFE;
+  font-family: $font-family-bold;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 19px;
+  text-align: center;
+  pointer-events: visible;
+  cursor: pointer;
+}
+.separator{
+    color:#979797;
+    font-family: $font-family-regular;
+    padding-left: 5%;
+    padding-right: 5%;
+}
+
+.sort{
+    padding-right: 10px;
+    pointer-events: visible;
+    cursor: pointer;
+}
+
+
+.modal-body{
+    padding: 0px !important;
+}
+.element-row, .table-row{
+    background-color: #fff !important;
+}
+
+.cdk-column-companyName{
+    margin-right: 2%;
+}
+.cdk-column-contactName{
+    margin-right: 2%;
+}
+
+.cdk-column-addressLine1{
+    margin-right: 2%;
+}
+
+.cdk-column-addressLine1[data-title]:hover:after {  
+    content: attr(data-title);
+    z-index: 1000000;
+    color: white;
+    position: absolute;
+    // left: 15%;
+    top: 10%;
+    // white-space: pre-line;
+    background-color: black;
+    font-size: 12px !important;
+    font-weight: 0 !important;
+    // width: 1rem;
+    // height: 1rem;
+  }
+  
+  .cdk-column-addressLine1:hover {
+    position: relative;
+    z-index: 1000px;
+  }
+  
+
+
+.truncate-overflow {
+    --max-lines: 2;
+    --lh: 1.3rem;
+     position: relative;
+    max-height: calc(var(--lh) * var(--max-lines));
+    overflow: hidden;
+    padding-right: 1rem; /* space for ellipsis */
+  }
+  .truncate-overflow::before {
+    position: absolute;
+    content: "...";
+    /* top: calc(var(--lh) * (var(--max-lines) - 1)); */
+    bottom: 0;
+    right: 0;
+  }
+  .truncate-overflow::after {
+    content: "";
+    position: absolute;
+    /* inset-inline-end: 0; */
+    right: 0;
+    width: 1rem;
+    height: 1rem;
+    background: white;
+  }
+
+
+  .qtyview{
+      font-family: $font-family-Semibold;
+  }
+
+
+.element-row{
+    padding-bottom: 3%;
+    //box-shadow: 0px 0px 10px #ddd, inset 0 0 10px #ddd;
+    // -webkit-box-shadow: 0 8px 6px -6px #ddd;
+    //    -moz-box-shadow: 0 8px 6px -6px #ddd;;
+    //         box-shadow: 0 5px 5px -5px #000000, inset 5px 5px -5px #000000;
+    padding-left: 56px;
+    padding-right: 56px;
+    padding-top: 56px;
+    margin: auto !important;
+//     box-shadow: inset 0 -10px 10px -10px #ddd;
+//     -webkit-box-shadow: inset 0 -10px 10px -10px #ddd;
+//    -moz-box-shadow: inset 0 -10px 10px -10px #ddd;
+}
+.norecords{
+    min-height: 247px !important;
+}
+
+.ordqty{
+    text-align: center;
+}
+
+.table-row{
+    margin: auto !important;
+    padding-left: 56px;
+    padding-right: 56px;
+    box-shadow: inset 0 7px 9px -7px #ddd;
+    
+    // box-shadow: 0px 0px 10px inset #ddd;
+    -webkit-box-shadow:  inset 0 7px 9px -7px #ddd;
+    -moz-box-shadow:  inset 0 7px 9px -7px #ddd;
+}
+
+.totalcostspan{
+    font-family: $font-family-Semibold;
+}
+
+.search-button{
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
+}
+
+.qtychange{
+    pointer-events: visible;
+    cursor: pointer;
+}
+
+// .mat-cell .cdk-column-itemName{
+//     display: block !important;
+// }

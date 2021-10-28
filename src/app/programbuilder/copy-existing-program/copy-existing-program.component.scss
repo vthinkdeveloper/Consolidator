@@ -1,0 +1,160 @@
+@import '../../../variable.scss';
+.container-fluid{
+    padding-left: 7%;
+    padding-right: 7%;
+    padding-top: 35px;
+}
+.panel{
+    padding-top: 2%;
+}
+
+.popup-input {
+    display: grid;
+    padding-left: 1%;
+    padding-right: 1%;
+    padding-bottom: 5%;
+  }
+
+  .pgminput{
+    padding-top: 5%;
+}
+
+.input-label {
+    margin-bottom: 10px;
+    font-family: $font-family-regular;
+    color: var(--app-font-color);
+    font-size: 16px;
+    letter-spacing: -0.29px;
+    line-height: 19px;
+  }
+
+  .input-class{
+    padding-left: 5% !important;
+}
+.d-inline-block {
+  width: 100%;
+  height: 45px;
+}
+.button-class {
+    margin-right: 1rem;
+    background-color: var(--app-background-color);
+    color: #FFFFFF;
+    height: 45px;
+    border: none;
+    font-size: 16px;
+    font-family: $font-family-Semibold;
+    width: 150px;
+    margin-top: 3rem;
+    margin-bottom: 1.5rem;
+    border-radius: 5px;
+    width: 180px;
+  }
+
+  .savebutton.submit {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyBjbGFzcz0ic3ZnLWxvYWRlciIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iNTUiIGhlaWdodD0iNTUiIHZpZXdCb3g9IjAgMCA4MCA4MCI+PHBhdGggZmlsbD0iI2ZmZiIgZD0iTTQwIDcyQzIyLjQgNzIgOCA1Ny42IDggNDBTMjIuNCA4IDQwIDhzMzIgMTQuNCAzMiAzMmMwIDEuMS0uOSAyLTIgMnMtMi0uOS0yLTJjMC0xNS40LTEyLjYtMjgtMjgtMjhTMTIgMjQuNiAxMiA0MHMxMi42IDI4IDI4IDI4YzEuMSAwIDIgLjkgMiAycy0uOSAyLTIgMnoiPjxhbmltYXRlVHJhbnNmb3JtIGF0dHJpYnV0ZVR5cGU9InhtbCIgYXR0cmlidXRlTmFtZT0idHJhbnNmb3JtIiB0eXBlPSJyb3RhdGUiIGZyb209IjAgNDAgNDAiIHRvPSIzNjAgNDAgNDAiIGR1cj0iMC42cyIgcmVwZWF0Q291bnQ9ImluZGVmaW5pdGUiLz48L3BhdGg+PC9zdmc+);
+    background-position: 50%;
+    background-repeat: no-repeat;
+    background-size: 20px;
+    color: transparent!important;
+    transition-duration: 0s;
+  }
+
+  .calender-input { 
+    position: relative; 
+  }
+
+  .card-error-text{
+    font-family:  $font-family-regular;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: var(--error-text-color);
+  }
+  
+  .calender-input button { 
+    display:block; 
+    width: 100%; 
+    box-sizing: border-box 
+  }
+  
+  .selected-image-color {
+    color: var(--app-background-color) !important; 
+  }
+
+  .unselected-image-color {
+    color: var(--button-disable-color) !important; 
+  }
+  
+  .calender-input-img { 
+    float: right;
+    top: 30%; 
+    right: 15px;  
+    color: var(--app-background-color); 
+    width: 5%;
+   }
+   .input-class-name {
+    padding-left: 4%;
+    outline: none;
+   }
+
+.drop-down-button {
+  background-color: var(--appsecondary-background-color) !important;
+  border-radius: 4px !important;
+  color: var(--app-description-text-color);
+  width: 100%;
+  text-align: left;
+  height: 45px;
+  padding-left: 4%;
+}
+
+.categoryname {
+  color: var(--app-description-text-color);
+  text-overflow: ellipsis !important;
+  line-break: anywhere !important;
+  display: block;
+  overflow: hidden;
+  -webkit-line-clamp: 1;
+  padding-right: 2rem;
+}
+
+.dropdown-toggle::after {
+   display: none;
+}
+
+.cal-icon {
+  left: 10px;
+}
+
+.dropdown-row {
+  display: inline-flex;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  // border-bottom: 0.5px solid #DDDDDD;
+  text-overflow: ellipsis;
+  white-space: break-spaces;
+ }
+
+ .drop-down-list {
+  max-height: 200px !important;
+ }
+
+ .drop-down-list {
+  overflow-y: auto;
+  max-height: 500px;
+}
+
+#dropdownBasic1 {
+  color: var(--app-font-color);
+  font-family: $font-family-regular;
+  font-size: 16px;
+  letter-spacing: 0;
+  padding-top: 8px;
+}
+
+.invalid-button {
+  background-color: var(--button-disable-color);
+}
+
+.valid-button {
+  background-color: var(--app-background-color);
+}

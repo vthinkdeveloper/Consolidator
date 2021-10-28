@@ -1,0 +1,53 @@
+@import '../../variable.scss';
+.buywindowname {
+    color: var(--app-font-color);
+    font-family: $font-family-medium;
+    font-size: 32px;
+    letter-spacing: 0;
+    line-height: 38px;
+    margin-top: 2%;
+    margin-bottom: 2%;
+}
+
+.container-fluid {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    min-height: 100vh;
+    margin-bottom: 30px;
+    overflow:hidden
+}
+
+.panel {
+    padding-top: 2%;
+}
+
+.menu-image {
+    height: 150px;
+    width: 150px;
+}
+
+.menu-title {
+    font-family: $font-family-medium;
+    font-size: 20px;
+    letter-spacing: 0;
+    line-height: 24px;
+    color: var(--app-font-color);
+    text-align: center;
+    margin-top: 10px;
+}
+
+.menu-column {
+    text-align: center;
+    margin-bottom: 40px;
+}
+@media (max-width: 600px) {
+    .menu-image {
+      height: 100px;
+      width: 100px;
+    }
+    .menu-title {
+      font-size: 14px;
+      line-height: 16px;
+    }
+  }

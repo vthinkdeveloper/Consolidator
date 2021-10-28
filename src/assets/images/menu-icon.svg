@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Icon/30px/Arrow Left</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Mobile-consolidator-dashboard-completed-2" transform="translate(-17.000000, -63.000000)">
+            <g id="Icon/30px/Arrow-Left" transform="translate(17.000000, 63.000000)">
+                <rect id="bounds" x="0" y="0" width="30" height="30"></rect>
+                <path d="M25,22 C25.6,22 26,22.4 26,23 C26,23.6 25.6,24 25,24 L25,24 L5,24 C4.4,24 4,23.6 4,23 C4,22.4 4.4,22 5,22 L5,22 Z M25,14 C25.6,14 26,14.4 26,15 C26,15.6 25.6,16 25,16 L25,16 L5,16 C4.4,16 4,15.6 4,15 C4,14.4 4.4,14 5,14 L5,14 Z M25,6 C25.6,6 26,6.4 26,7 C26,7.6 25.6,8 25,8 L25,8 L5,8 C4.4,8 4,7.6 4,7 C4,6.4 4.4,6 5,6 L5,6 Z" id="Shape" fill-opacity="0.86" fill="#262626"></path>
+            </g>
+        </g>
+    </g>
+</svg>

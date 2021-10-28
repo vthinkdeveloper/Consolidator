@@ -1,0 +1,118 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerOrder" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+  
+  <div class="container-fluid">
+    <div class="row margin-row" *ngIf="data && data.element" style="z-index: 9999;position: relative;" >    
+        <div class="row" style="height: 40px;">
+            <div class="col-10">
+                <div class="title-text">{{data.element.itemName}}</div>
+            </div>
+            <div class="col-2">
+                <img src="{{data.assetPath}}images/close.svg" (click)="closeModel()" class="close close-font pointer-class">
+            </div>
+        </div>
+       <div class="row" style="margin-top: 15px;margin-bottom: 15px;">
+          <div class="col-3 col-md-2">
+              <div style="padding-bottom: 10px;" class="row">
+                <app-image-card [type]="'programElement'" [width]="'47'" [height]="'47'" [thumbnailImagePath]="data.element.thumbnailImagePath" [isround]="false"></app-image-card>
+              </div>
+          </div>
+          <div class="col-9 col-md-8 currency-row">
+             <div>
+                <div class="currency-title">{{ resourceMessage && resourceMessage['Pricelbl'] }}</div>
+                <div class="currency-text">{{data.element.unitPrice | currency }}</div>
+             </div>
+             <div style="padding-left: 10%;width: 100%;">
+                <div class="currency-title ordqtylbl">{{ resourceMessage && resourceMessage['OrderedQtyLbl'] }}</div>
+                <div class="currency-text ordqtyvalue" id="TotalQTY">{{data.element.quantity}}</div>
+            </div>
+        </div>
+       </div>
+       <div class="row total-row">
+        <div class="col-6"><p class="total-text">{{ resourceMessage && resourceMessage['TotalCostlbl'] }}</p></div> 
+        <div class="col-6"><p id="totalAmount" class="total-text currency">{{data.element.totalCost | currency}}</p></div>
+    </div>
+    </div>
+    <div class="row" style="height: 35px;background-color: #fff;">
+    </div>
+    <div class="calender-input padding-class">
+        <input class="search-box input-class input-class-name search-input-class" tabindex="-1"  #txtsearch placeholder="{{ resourceMessage && resourceMessage['SearchAddrlbl'] }}">
+        <i p-icon (click)="search(txtsearch.value)" class="material-icons search-icon-mobile">search</i>
+    </div>
+    <div id="example-container" class="example-container padding-class">
+            <mat-table #table [dataSource]="dataSource" *ngIf="showItemList()"  matSort>       
+            
+                <ng-container matColumnDef="companyName">
+                    <mat-header-cell *matHeaderCellDef  >
+                        <img mat-sort-header (click)="sortbyname()" class="sort" src="{{data.assetPath}}images/sort.svg" alt="new">
+                        {{ resourceMessage && resourceMessage['CompanyLbl'] }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="companyname leftalign" >
+                        <div data-html="true">
+                            <div data-html="true" attr.id="{{element.companyName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isCompanyToolTipExists(element)" class="row company-name truncate-overflow">{{element.companyName}}</div>
+                            <div data-html="true" attr.id="{{element.contactName}}"  #tooltip1="matTooltip" (click)="tooltip1.toggle()"  [matTooltip]="isContactToolTipExists(element)" class="row address-line truncate-overflow">{{element.contactName}}</div>
+                            <div data-html="true" attr.id="{{element.lmeId}}" #tooltip2="matTooltip" (click)="tooltip2.toggle()"  class="row address-line truncate-overflow" [matTooltip]="isAddressToolTipExists(element)" >{{element.addressLine1}}, {{element.addressLine2}} {{element.city}} {{element.state}}, {{element.postalCode}}</div>          
+                        </div>
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="quantity" >
+                    <mat-header-cell *matHeaderCellDef  >{{ resourceMessage && resourceMessage['Quantitylbl'] }}</mat-header-cell>
+                    <mat-cell *matCellDef="let element; let i = index;" > 
+    
+                        <button class="circle minus newminus nomobile" *ngIf="data.orderStatus" id="{{ 'minus' + element.lmeId }}" (click)="updateqty(element.lmeId,'minus',i)"></button>
+            <div class="placeholder" >
+                <span *ngIf="!data.orderStatus" class="qtyview">{{element.quantity == undefined ? 0 : element.quantity}}</span>
+                <input NumberonlywithoutdotsDirective *ngIf="data.orderStatus" autocomplete="off" id="{{ 'txtqty' + element.lmeId }}" #txtqty [disabled]="!data.orderStatus" class="txtqty" [(ngModel)]="element.quantity == undefined ? 0 : element.quantity" (change)="updateqty(element.lmeId,'change',i)"/>
+            </div>
+            <button class="circle plus newplus nomobile" id="{{ 'plus' + element.lmeId }}" *ngIf="data.orderStatus" (click)="updateqty(element.lmeId,'add',i)"></button>
+    
+                        </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="totalCost" >
+                    <mat-header-cell *matHeaderCellDef  >{{ resourceMessage && resourceMessage['TotalCostlbl'] }}  </mat-header-cell>
+                    <mat-cell *matCellDef="let element"  >
+                    <span id="{{ 'totalcost' + element.lmeId }}">
+                        {{element.totalCost == undefined ? 0 : element.totalCost | currency }}
+                    </span> 
+                    </mat-cell>
+                </ng-container>
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns" ></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        
+            </mat-table>
+            <mat-paginator style="display: none;"   [pageSizeOptions]="[8]"></mat-paginator>
+            <div *ngIf="(this.dataSource && this.dataSource.data.length==0) || ((orderData && orderData.status === false) && (data.element.quantity  === 0))" class="norecords">{{ resourceMessage &&
+                resourceMessage['Norecordslbl'] }}</div>
+            <div class="row" *ngIf="showItemList()">
+                <div class="col-12" style="display: flex; justify-content: center;">
+                <div (click)="previousClicked()"><i [ngStyle]="{'color':(startIndex === 1) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(startIndex !== 1) ? 'pointer-class' : ''" class="fa fa-angle-left pagination-icons"></i></div>
+                <div *ngFor="let page of getPageList() let i=index">
+                
+                <div class="pointer-class pagination-item" style="padding: 20px;"  (click)="changePage(page)">
+                    <p style="padding-top: 5px;"  [ngClass]="(page === selectedPage) ? 'selectedPage': ''">{{page}}</p>
+                </div>
+                </div>
+                <div (click)="nextClicked()"><i [ngStyle]="{'color':(endIndex === noOfPages) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(endIndex !== noOfPages) ? 'pointer-class' : ''" class="fa fa-angle-right pagination-icons"></i></div>
+                </div>
+            </div>
+            <div style="background-color: #fff;height: 140px;">
+    
+            </div>
+        <div class="row button-div" *ngIf="this.dataSource && data.orderStatus && this.dataSource && this.dataSource.data.length>0">
+            <div style="padding: 0;" class="col-6">
+                <input type="button" id="cancel-button" (click)="cancelchanges()"  value="{{ resourceMessage && resourceMessage['CancelChangesBtn'] }}" ng class="btn btn-primary btncancelchanges">
+            </div>
+            <div style="padding: 0;" class="col-6">
+                <input type="button" id="save-button" (click)="savechanges()" value="{{ resourceMessage && resourceMessage['SaveChangesBtn'] }}" ng class="btn btn-primary btnsavechanges">
+            </div> 
+        </div>
+         
+    </div>
+    
+  </div>
+ 

@@ -1,0 +1,142 @@
+  
+  <div  class="example-container mat-elevation-z8" [ngStyle]="{'min-height':(getElementLoading() === false) ? '300px' :  ''}">
+    <div *ngIf="!appCommonFunctions.isMobileCompatibleScreen()">
+      <mat-table #table [dataSource]="dataSource" *ngIf="this.dataSource.data.length>0"   matSort>
+
+          <ng-container matColumnDef="programName">
+              <mat-header-cell *matHeaderCellDef > <img mat-sort-header (click)="sortbyname()"  class="sort" src="{{assetPath}}images/sort.svg" alt="new">{{ resourceMessage &&
+                      resourceMessage['Programname'] }}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="buy-window-name" >               
+              <div attr.id="{{element.programName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(element.programName)" class="truncate-overflow programName">{{element.programName}}</div>
+           </mat-cell>
+          </ng-container>
+         
+          <ng-container matColumnDef="buyWindowName">
+              <mat-header-cell *matHeaderCellDef  style="width: 20%;" > <img  mat-sort-header (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new">{{ resourceMessage &&
+                      resourceMessage['ProgramDetailsLbl'] }}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="date-class" style="width: 20%;" >
+                  <div attr.id="{{element.buyWindowName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(element.buyWindowName)" class="truncate-overflow programName">{{element.buyWindowName}}</div>
+                 <span class="startdate">{{element.startDate | date:'MM/dd/YYYY'}}-{{element.endDate | date:'MM/dd/YYYY'}} </span> </mat-cell>
+              </ng-container>        
+          
+          <ng-container matColumnDef="itemCount">
+              <mat-header-cell *matHeaderCellDef  style="width: 20%;" > <img mat-sort-header (click)="sortbyname()"  class="sort" src="{{assetPath}}images/sort.svg" alt="new">{{ resourceMessage &&
+                      resourceMessage['noofitems'] }}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="date-class itemcountclass" style="width: 20%;" > {{element.itemCount}} </mat-cell>
+          </ng-container>
+          <ng-container matColumnDef="userCount">
+            <mat-header-cell *matHeaderCellDef  style="width: 20%;" > <img mat-sort-header (click)="sortbyname()"  class="sort" src="{{assetPath}}images/sort.svg" alt="new">{{ resourceMessage &&
+                    resourceMessage['userslbl'] }}</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="date-class usercountclass" style="width: 20%;" >{{element.userCount}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="locations">
+            <mat-header-cell *matHeaderCellDef > <img  mat-sort-header (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new">{{resourceMessage &&resourceMessage['locationsLbl']}}</mat-header-cell>
+            <mat-cell *matCellDef="let element" class="date-class locationclass" >
+                {{element.locations}}    
+            </mat-cell>
+            </ng-container> 
+
+          <!-- <ng-container matColumnDef="quantity">
+              <mat-header-cell *matHeaderCellDef  style="width: 20%;" > <img  mat-sort-header (click)="sortbyname()"  class="sort" src="{{assetPath}}images/sort.svg" alt="new">
+                   {{ resourceMessage &&
+                      resourceMessage['Totalqtylbl'] }}   </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="date-class" style="width: 20%;" > {{element.quantity}} </mat-cell>
+          </ng-container> -->
+          <!-- <ng-container matColumnDef="totalCost">
+              <mat-header-cell *matHeaderCellDef  style="width: 20%;" > <img mat-sort-header (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                  {{ resourceMessage &&
+                      resourceMessage['TotalCostlbl'] }}    
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="date-class" style="width: 20%;" >
+                  {{element.totalCost | currency}}
+              </mat-cell>
+          </ng-container> -->
+          <ng-container matColumnDef="programId">
+              <mat-header-cell *matHeaderCellDef style="width: 20%;" >  
+              </mat-header-cell>
+              <mat-cell *matCellDef="let element" class="date-class" style="width: 20%;" >
+                  <a class="edit-order" *ngIf="element.isActive && canModify" (click)="modifyElement(element)" >{{ resourceMessage &&
+                      resourceMessage['Modifylbl'] }}</a>
+                      <a class="edit-order" *ngIf="element.isActive && canView" (click)="viewElement(element)" >
+                        {{ resourceMessage && resourceMessage['Viewlnk'] }}</a>
+                      <a class="edit-order" *ngIf="!element.isActive" (click)="viewElement(element)">
+                          {{ resourceMessage && resourceMessage['Viewlnk'] }}</a>
+              </mat-cell>
+          </ng-container>
+  
+      <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row">
+        </mat-row>
+  
+      </mat-table>
+    </div>
+   
+    <div *ngIf="appCommonFunctions.isMobileCompatibleScreen()">
+        <mat-table #table [dataSource]="dataSource" *ngIf="this.dataSource.data.length>0"   matSort>
+
+            <ng-container matColumnDef="programName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header (click)="sortbyname()" style="width: 40%;"> <img  class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                    {{ resourceMessage &&
+                        resourceMessage['Programslbl'] }}
+                        
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="buy-window-name" style="width: 40%;text-align: left;">
+                <span attr.id="{{element.programName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(element.programName)" class="truncate-overflow programnamemobile">{{element.programName}}</span>
+                <span class="mobile-description" >
+                    <span attr.id="{{element.buyWindowName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(element.buyWindowName)" class="truncate-overflow buywindownamemobile">{{element.buyWindowName}}</span>
+                    {{element.startDate | date:'MM/dd/YYYY'}}-{{element.endDate | date:'MM/dd/YYYY'}}<br>
+                   <div class="itemcountmobile">{{element.itemCount}} <span *ngIf="element.itemCount > 1">Items</span> <span *ngIf="element.itemCount == 1">Item</span></div> 
+                </span>
+                <span style="display: none;">{{element.startDate | date:'MM/dd/YYYY'}}-{{element.endDate | date:'MM/dd/YYYY'}}</span>
+             </mat-cell>
+            </ng-container>
+           
+           
+            
+            <ng-container matColumnDef="userCount">
+              <mat-header-cell *matHeaderCellDef  style="width: 20%;" > {{ resourceMessage && resourceMessage['uersmobileLbl'] }}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="date-class usercountclass" style="width: 20%;" >{{element.userCount}}</mat-cell>
+          </ng-container>
+  
+          <ng-container matColumnDef="locations">
+              <mat-header-cell *matHeaderCellDef >{{resourceMessage &&resourceMessage['locationsmobileLbl']}}</mat-header-cell>
+              <mat-cell *matCellDef="let element" class="date-class locationclass" >{{element.locations}}</mat-cell>
+              </ng-container> 
+            <ng-container matColumnDef="programId">
+                <mat-header-cell *matHeaderCellDef style="width: 10%;" >  
+                </mat-header-cell>
+                <mat-cell *matCellDef="let element" class="date-class" style="width: 10%;" >
+                  <img class="edit-image" *ngIf="element.isActive && canModify"  (click)="modifyElement(element)" src="{{assetPath}}images/edit-icon.svg">
+                  <img class="edit-image" *ngIf="element.isActive && canView" (click)="viewElement(element)" src="{{assetPath}}images/view.svg">
+                  <img class="edit-image" *ngIf="!element.isActive" (click)="viewElement(element)" src="{{assetPath}}images/view.svg">
+                </mat-cell>
+            </ng-container>
+    
+        <mat-header-row *matHeaderRowDef="displayedColumnsMobile"></mat-header-row>
+          <mat-row *matRowDef="let row; columns: displayedColumnsMobile;" matRipple class="element-row">
+          </mat-row>
+    
+        </mat-table>
+      </div>
+
+  <mat-paginator style="display: none" [pageSizeOptions]="[10]"></mat-paginator>
+  <div class="row" *ngIf="this.dataSource.data.length>0" >
+      <div class="col-12" style="display: flex; justify-content: center;">
+       <div (click)="previousClicked()"><i [ngStyle]="{'color':(startIndex === 1) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(startIndex !== 1) ? 'pointer-class' : ''" class="fa fa-angle-left pagination-icons"></i></div>
+        <div *ngFor="let page of getPageList() let i=index">
+         
+        <div class="pointer-class pagination-item" style="padding: 20px;"  (click)="changePage(page)">
+          <p style="padding-top: 5px;"  [ngClass]="(page === selectedPage) ? 'selectedPage': ''">{{page}}</p>
+         </div>
+        </div>
+        <div (click)="nextClicked()"><i [ngStyle]="{'color':(endIndex === noOfPages) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(endIndex !== noOfPages) ? 'pointer-class' : ''" class="fa fa-angle-right pagination-icons"></i></div>
+      </div>
+    </div>
+</div>
+
+
+
+
+
+  

@@ -1,0 +1,381 @@
+@import '../../variable.scss';
+.close-font {
+    float: right;
+    color: #979797;
+    font-size: 3rem;
+    border: none;
+    background-color: #FFFFFF;
+    font-weight: 100;
+    margin-top: 0px;
+    margin-right: 0px;
+  }
+
+  .popup-confirm {
+    min-height: 45px;
+    font-family: $font-family-Semibold;
+    font-size: 16px;
+    text-align: center;
+    color: #222222;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 1px solid #006AFE;
+    background-color: var(--app-selection-background-color);
+    width: 150px;
+  }
+  .pop-up-text {
+    margin: 10px;
+    margin-top: 12px;
+  }
+
+  .popup-cancel {
+    min-height: 45px;
+    // border: 1px solid #979797;
+    // box-shadow: 0 2px 23px 0 rgba(0,0,0,0.05);
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-right: 30px;
+    font-family: $font-family-Semibold;
+    font-size: 16px;
+    text-align: center;
+    color: #222222;
+    cursor: pointer;
+    background-color: var(--app-selection-background-color);
+    width: 150px;
+  }
+
+  .popup-cancel, .popup-confirm {
+    display: inline-block;
+   }
+
+  .pop-uptext {
+    margin-top: 20px;
+    text-align: center;
+    font-family: $font-family-regular;;
+    font-size: 22px;
+    color: var(--app-font-color);
+    line-height: 30px;
+  }
+
+  .popup-buttons {
+    text-align: center;
+    display: flex;
+    padding-top: 5%;
+    align-self: center;
+    padding-bottom: 10%;
+  }
+
+  .popup-input {
+    display: grid;
+    padding-left: 10%;
+    padding-right: 10%;
+    padding-bottom: 5%;
+  }
+
+  .d-inline-block {
+    width: 100%;
+    height: 45px;
+  }
+
+  .drop-down-button {
+    background-color: var(--appsecondary-background-color) !important;
+    border-radius: 4px !important;
+    color: var(--app-description-text-color);
+    width: 100%;
+    text-align: left;
+    height: 45px;
+    padding-left: 5%;
+  }
+
+  #dropdownBasic1{
+    // background-color: #FFFFFF !important;
+    border-radius: 4px !important;
+    color: var(--app-font-color);
+    font-family: $font-family-regular;
+    font-size: 16px;
+    letter-spacing: 0;
+
+  }
+
+  .categoryname {
+    color: var(--app-description-text-color);
+  }
+
+  .dropdown-toggle::after {
+    display: none;
+ }
+
+ .dropdown-row {
+  display: inline-flex;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid #DDDDDD
+ }
+
+ .dropdown-item {
+  margin-left: 0px;
+ }
+
+ .dropdown-column {
+   text-align: right;
+   vertical-align: middle;
+ }
+ .dropdown-menu {
+    border: none;
+    box-shadow: 0 2px 9px 0 rgba(210,210,210,0.5);
+    padding-top: 0;
+    padding-bottom: 0;
+ }
+
+ .program-details{
+    background-color: var(--appsecondary-background-color) !important;
+    margin-top: 20px;
+    padding-left: 22px;
+    padding-top: 22px;
+    padding-bottom: 22px;
+    border-radius: 4px;
+ }
+
+ .title{
+    border-bottom: 1px solid rgba(210,210,210,0.5);
+    font-family: $font-family-medium;
+    font-size: 18px;
+    letter-spacing: -0.33px;
+    line-height: 21px;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+    margin-right: 22px;
+}
+
+.list-heading{
+  color: var(--app-font-color);
+  font-family: $font-family-medium;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 19px;
+}
+
+.pgmdetails{
+    padding-right: 22px;
+}
+
+.dateclass{
+    color: #A2A2A2;
+    font-family: $font-family-regular;
+    font-size: 14px;
+    letter-spacing: -0.26px;
+    line-height: 16px;
+    padding-bottom: 16px;
+}
+
+ .buywindowname{
+    color: var(--app-font-color);
+    font-family: $font-family-Semibold;
+    font-size: 24px;
+    letter-spacing: 0;
+    line-height: 24px;
+    text-align: center;
+    padding-bottom: 23px;
+    margin-bottom: 0px;
+ }
+ .close-font {
+    float: right;
+    color: #979797;
+    font-size: 2rem;
+    border: none;
+    background-color: #FFFFFF;
+    font-weight: 200;
+  }
+  .drop-down-button {
+    background-color: var(--appsecondary-background-color) !important;
+    border-radius: 4px !important;
+    color: var(--app-description-text-color);
+    width: 100%;
+    text-align: left;
+    height: 45px;
+    padding-left: 5%;
+  }
+
+  #dropdownBasic1{
+    // background-color: #FFFFFF !important;
+    border-radius: 4px !important;
+    color: var(--app-font-color);
+    font-family: $font-family-regular;
+    font-size: 16px;
+    letter-spacing: 0;
+    padding-top: 9px;
+  }
+
+  .categoryname {
+    color: var(--app-description-text-color);
+    font-family: $font-family-regular;
+    color: var(--app-font-color);
+   
+  }
+.programnametruncate{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1
+}
+  .truncate-programname{
+    --max-lines: 2;
+    --lh: 1.3rem;
+     position: relative;
+    max-height: calc(var(--lh) * var(--max-lines));
+    overflow: hidden;
+    padding-right: 1rem; /* space for ellipsis */
+  }
+
+  .programnameitemtruncate{
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+    line-break: anywhere;
+}
+
+  .truncate-programname-list{
+    --max-lines: 2;
+    --lh: 1.3rem;
+     position: relative;
+    max-height: calc(var(--lh) * var(--max-lines));
+    overflow: hidden;
+    padding-right: 1rem; /* space for ellipsis */
+  }
+  ::ng-deep .mat-tooltip  {
+    white-space: pre-line    !important;
+  }
+  .dropdown-toggle{
+    white-space: normal !important;
+}
+.dropdown-item {
+    white-space: normal !important;
+}
+
+  .dropdown-toggle::after {
+    display: none;
+ }
+
+ .dropdown-row {
+  display: inline-flex;
+  padding-bottom: 10px;
+  padding-top: 10px;
+  border-bottom: 1px solid #DDDDDD
+ }
+
+ .dropdown-item {
+  margin-left: 0px;
+ }
+
+ .dropdown-column {
+   text-align: right;
+   vertical-align: middle;
+ }
+
+ .dropdown-menu {
+    border: none;
+    box-shadow: 0 2px 9px 0 rgba(210,210,210,0.5);
+    padding-top: 0;
+    padding-bottom: 0;
+ }
+
+ .itemList-name {
+  color: var(--app-font-color);
+  font-family: $font-family-Semibold;
+  font-size: 16px;
+  letter-spacing: -0.29px;
+  line-height: 19px;
+}
+
+ .itemList-long-desc {
+    color: #0F0F0F;
+    font-family: $font-family-regular;
+    font-size: 14px;
+    letter-spacing: -0.26px;
+    line-height: 16px;
+ }
+
+ .itemList-short-desc {
+  color: var(--app-description-text-color);
+  font-family: $font-family-regular;
+  font-size: 14px;
+  letter-spacing: -0.26px;
+  line-height: 16px;
+}
+
+.list-column-text {
+  font-family: $font-family-regular;
+  color: var(--app-font-color);
+  letter-spacing: -0.29px;
+  line-height: 19px;
+}
+
+ .dropdown-item:focus, 
+ .dropdown-item:hover {
+   background-color: var(--app-selection-background-color);
+ }
+ .calender-input-img {
+    position: absolute;
+    top: 30%;
+    right: -9px;
+    color: var(--app-background-color);
+    width: 5%;
+}
+
+.programname{
+    font-family: $font-family-medium;
+    font-size: 16px;
+    letter-spacing: -0.29px;
+    line-height: 19px;
+}
+
+.element-list{
+    margin-top: 22px;
+    background-color: var(--appsecondary-background-color) !important;
+    padding-top: 22px;
+    padding-left: 22px;
+    border-radius: 4px;
+}
+.item-heading-row{
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 10px;
+    margin-left: 0px;
+    margin-right: 22px;
+}
+.item-list-row{
+    border-bottom: 1px solid #DDDDDD;
+    margin-bottom: 1%;
+    margin-right: 22px;
+    margin-left: 0px;
+}
+.item-list-row:last-child {
+    border: none;
+  }
+.index{
+    margin: auto;
+}
+.elementrow{
+    height: 100%;
+    width: 100%;
+     margin-bottom: 5%;
+    margin-top: 5%;
+    padding-bottom: 5%;
+}
+
+.imagelbl{
+    padding-left: 0px !important;
+}
+.closepopup{
+    position: absolute;
+    right: 15px;
+    top: 3px;
+    background: white !important;
+    cursor: pointer;
+}
+.viewmodal-body{
+  padding-top: 3px !important;
+}

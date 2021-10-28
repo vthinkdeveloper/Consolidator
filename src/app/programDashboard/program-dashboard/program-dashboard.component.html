@@ -1,0 +1,198 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerdashboard" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+  <div *ngIf="!appCommonFunctions.isMobileCompatibleScreen()" class="container-fluid">
+
+    <!-- <div class="page-heading">Program Dashboard</div> -->
+     <div class="row search-bar">
+         <div class="col-5">
+            <div class="calender-input">
+                <input  class="search-box input-class input-class-name" #txtsearch (keyup.enter)="search(txtsearch.value)" placeholder="{{resourceMessage &&
+                  resourceMessage['Searchlbl'] }}" >
+                  <button class="fa fa-search search-button" aria-hidden="true" (click)="search(txtsearch.value)" ></button>
+            </div>
+         </div>
+         <div class="col-7">
+           <div class="row">
+            <div class="col-4">
+              <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary ddldropdown" id="ddlfilter" ngbDropdownToggle>
+                      <span id="Filtername" >{{ resourceMessage &&
+                        resourceMessage['Filterlbl'] }}</span>
+                      <span id="Filterid" #categoryid style="display: none;">0</span>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="ddlfilter">
+                    <button ngbDropdownItem [ngClass]="!filterSelectedValue ? 'filter-button-background-color' : ''"  (click)="getFilter($event,0,'none',txtsearch.value)">{{ resourceMessage &&
+                      resourceMessage['Filterlbl'] }}</button>
+                    <button ngbDropdownItem [ngClass]="filterSelectedValue === 30 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,30,'days',txtsearch.value)">{{ resourceMessage &&
+                      resourceMessage['Past30days'] }}</button>
+                    <button ngbDropdownItem [ngClass]="filterSelectedValue === 3 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,3,'months',txtsearch.value)">{{ resourceMessage &&
+                      resourceMessage['Past3months'] }}</button>
+                    <button ngbDropdownItem [ngClass]="filterSelectedValue === 6 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,6,'months',txtsearch.value)">{{ resourceMessage &&
+                      resourceMessage['Past6months'] }}</button>
+                    <button ngbDropdownItem [ngClass]="filterSelectedValue === 2021 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2021,'year',txtsearch.value)">{{ resourceMessage &&
+                      resourceMessage['2021lbl'] }}</button>
+                    <button ngbDropdownItem [ngClass]="filterSelectedValue === 2020 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2020,'year',txtsearch.value)">{{ resourceMessage &&
+                      resourceMessage['2020lbl'] }}</button>
+                      <button ngbDropdownItem [ngClass]="filterSelectedValue === 2019 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2019,'year',txtsearch.value)">{{ resourceMessage &&
+                        resourceMessage['2019lbl'] }}</button>
+                  </div>
+                </div>
+          </div>
+          <div class="col-4">
+              <div ngbDropdown class="d-inline-block">
+                  <button class="btn btn-outline-primary ddldropdown" id="ddlmarket" ngbDropdownToggle>
+                      <span id="marketname" >{{ resourceMessage &&
+                        resourceMessage['FilterMarketlbl'] }}</span>
+                      <span id="marketid" #categoryid style="display: none;">0</span>
+                  </button>
+                  <div ngbDropdownMenu aria-labelledby="ddlmarket">
+                    <button ngbDropdownItem  (click)="selectMarket(null,txtsearch.value)">
+                      {{ resourceMessage &&
+                        resourceMessage['FilterMarketlbl'] }}</button>
+                    <button ngbDropdownItem [ngClass]="selectedMarket && selectedMarket.clientId === market.clientId ? 'filter-button-background-color' : ''"  *ngFor="let market of marketDetails let i=index" (click)="selectMarket(market,txtsearch.value)">
+                      {{market.clientId}}</button>
+                  </div>
+                </div>
+          </div>
+          <div class="col-4">
+              <button class="create-button" id="downloadReport" (click)="downloadReport($event)">{{ resourceMessage &&
+                resourceMessage['Downloadbtnlbl'] }}</button>
+          </div>
+           </div>
+         
+         </div>
+         
+        </div>
+     
+        <mat-tab-group animationDuration="0ms" [ngStyle]="{'min-height':(isloaded === false) ? '300px' :  ''}" [selectedIndex]="0" (selectedTabChange)="programListComponent.tabChanged($event)" >
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <span class="dot"></span>
+            <span class="windowtype">{{ resourceMessage &&
+              resourceMessage['ActivePgmslbl'] }}</span>
+            <span class="buywindow-count">{{activeprogramOrderDetails.length}}</span>
+          </ng-template>
+          <div class="norecords" *ngIf="activeprogramOrderDetails.length == 0 && getElementLoading() && isloaded">{{ resourceMessage &&
+            resourceMessage['Norecordslbl'] }}</div>
+          <app-program-list #programListComponent [assetPath]="assetPath"  [status]="status[0]" [unFilteredbuywindowlist]="programOrderDetails" [programorderlist]="activeprogramOrderDetails"  ></app-program-list>
+        </mat-tab>
+          <mat-tab>
+            <ng-template mat-tab-label>
+              <span class="dot"></span>
+              <span class="windowtype">{{ resourceMessage &&
+                  resourceMessage['CompletedPgmslbl'] }}</span>
+              <span class="buywindow-count">{{completedprogramOrderDetails.length}}</span>
+            </ng-template>
+            <div class="norecords" *ngIf="completedprogramOrderDetails.length == 0 && isloaded">{{ resourceMessage &&
+              resourceMessage['Norecordslbl'] }}</div>
+            <app-program-list #programListComponent [assetPath]="assetPath"   [status]="status[1]" [unFilteredbuywindowlist]="programOrderDetails" [programorderlist]="completedprogramOrderDetails"></app-program-list>
+          </mat-tab>
+        </mat-tab-group>
+  </div>
+  <div *ngIf="appCommonFunctions.isMobileCompatibleScreen()" class="container-fluid">
+    <div class="row search-bar">
+      <div class="col-12">
+        <div class="calender-input">
+            <input class="search-box input-class input-class-name search-input-class" #txtsearch  placeholder="{{resourceMessage &&
+              resourceMessage['Searchlbl'] }}" (keyup.enter)="search(txtsearch.value)" >
+              <i class="fa fa-search search-button search-button-mobile" aria-hidden="true" (click)="search(txtsearch.value)" ></i>
+        </div>
+     </div>
+    </div>
+    <div class="row" style="padding-left: 5%;margin-bottom: 20px;margin-top: 20px;">
+      <div class="col-5" (click)="showFilterIconsClicked()" >
+        <div class="col-12">
+          <img style="display: inline;" src="{{assetPath}}images/filtericon.svg" >
+          <p style="display: inline;" class="background-color">Filter</p>
+          <i *ngIf="showFilterIcons" style="color: #0076FF;display: inline;" class="fa fa-caret-up caret-arrow-down fa-lg" aria-hidden="true"></i>
+          <i *ngIf="!showFilterIcons" style="color: #0076FF;display: inline;" class="fa fa-caret-down caret-arrow-down fa-lg" aria-hidden="true"></i>
+        </div>
+      </div>
+      <div *ngIf="!showFilterIcons" class="col-7" (click)="downloadReport($event)">
+        <div class="col-12">
+          <u style="display: inline;" class="downloadText">{{ resourceMessage && resourceMessage['Downloadbtnlbl'] }}</u>
+          <div style="display: inline;" class="download-icon"><img src="{{assetPath}}images/download-icon.svg"></div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="showFilterIcons" class="col-12 filter-div">
+      <div ngbDropdown class="d-inline-block ddlfilter">
+          <button class="btn btn-outline-primary ddldropdown" id="ddlfilter" ngbDropdownToggle>
+              <span id="Filtername" class="filter-name-mobile" >{{ resourceMessage &&
+                resourceMessage['Filterlbl'] }}</span>
+              <span id="Filterid" #categoryid style="display: none;">0</span>
+              <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="ddlfilter">
+            <button ngbDropdownItem [ngClass]="!filterSelectedValue ? 'filter-button-background-color' : ''"  (click)="getFilter($event,0,'none',txtsearch.value)">{{ resourceMessage &&
+              resourceMessage['Filterlbl'] }}</button>
+            <button ngbDropdownItem [ngClass]="filterSelectedValue === 30 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,30,'days',txtsearch.value)">{{ resourceMessage &&
+              resourceMessage['Past30days'] }}</button>
+            <button ngbDropdownItem [ngClass]="filterSelectedValue === 3 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,3,'months',txtsearch.value)">{{ resourceMessage &&
+              resourceMessage['Past3months'] }}</button>
+            <button ngbDropdownItem [ngClass]="filterSelectedValue === 6 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,6,'months',txtsearch.value)">{{ resourceMessage &&
+              resourceMessage['Past6months'] }}</button>
+            <button ngbDropdownItem [ngClass]="filterSelectedValue === 2021 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2021,'year',txtsearch.value)">{{ resourceMessage &&
+              resourceMessage['2021lbl'] }}</button>
+            <button ngbDropdownItem [ngClass]="filterSelectedValue === 2020 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2020,'year',txtsearch.value)">{{ resourceMessage &&
+              resourceMessage['2020lbl'] }}</button>
+              <button ngbDropdownItem [ngClass]="filterSelectedValue === 2019 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2019,'year',txtsearch.value)">{{ resourceMessage &&
+                resourceMessage['2019lbl'] }}</button>
+          </div>
+        </div>
+  </div>
+  <div *ngIf="showFilterIcons" class="col-12 filter-div">
+      <div ngbDropdown class="d-inline-block ddlfilter">
+          <button class="btn btn-outline-primary ddldropdown" id="ddlmarket" ngbDropdownToggle>
+              <span id="marketname" class="filter-name-mobile" >{{ resourceMessage &&
+                resourceMessage['FilterMarketlbl'] }}</span>
+              <span id="marketid" #categoryid style="display: none;">0</span>
+              <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"></i>
+          </button>
+          <div ngbDropdownMenu aria-labelledby="ddlmarket">
+            <button ngbDropdownItem  (click)="selectMarket(null,txtsearch.value)">
+              {{ resourceMessage &&
+                resourceMessage['FilterMarketlbl'] }}</button>
+            <button ngbDropdownItem [ngClass]="selectedMarket && selectedMarket.clientId === market.clientId ? 'filter-button-background-color' : ''"  *ngFor="let market of marketDetails let i=index" (click)="selectMarket(market,txtsearch.value)">
+              {{market.clientId}}</button>
+          </div>
+        </div>
+  </div>
+  <div *ngIf="showFilterIcons" class="row" style="margin-top: 5%;">
+    
+    <div class="mobile-button" (click)="downloadReport($event)">
+      <u class="downloadText">{{ resourceMessage && resourceMessage['Downloadbtnlbl'] }}</u>
+      <div class="download-icon"><img src="{{assetPath}}images/download-icon.svg"></div>
+    </div>
+  </div>  
+    
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="0" (selectedTabChange)="programListComponent.tabChanged($event)" >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="dot"></span>
+        <span class="windowtype">{{ resourceMessage &&
+          resourceMessage['Activelbl'] }}</span>
+        <span class="buywindow-count">{{activeprogramOrderDetails.length}}</span>
+      </ng-template>
+      <div class="norecords" *ngIf="activeprogramOrderDetails.length == 0 && getElementLoading() && isloaded">{{ resourceMessage &&
+        resourceMessage['Norecordslbl'] }}</div>
+      <app-program-list #programListComponent [assetPath]="assetPath"  [status]="status[0]" [unFilteredbuywindowlist]="programOrderDetails" [programorderlist]="activeprogramOrderDetails"  ></app-program-list>
+    </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="dot"></span>
+          <span class="windowtype">{{ resourceMessage &&
+            resourceMessage['Compeletedlbl'] }}</span>
+          <span class="buywindow-count">{{completedprogramOrderDetails.length}}</span>
+        </ng-template>
+        <div class="norecords" *ngIf="completedprogramOrderDetails.length == 0 && isloaded">{{ resourceMessage &&
+          resourceMessage['Norecordslbl'] }}</div>
+        <app-program-list #programListComponent [assetPath]="assetPath"   [status]="status[1]" [unFilteredbuywindowlist]="programOrderDetails" [programorderlist]="completedprogramOrderDetails"></app-program-list>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+    

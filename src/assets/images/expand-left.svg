@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 29</title>
+    <defs>
+        <path d="M7.71715729,7.30049062 L1.34950938,0.932842712 C1.19329966,0.776632996 1.19329966,0.523367004 1.34950938,0.367157288 C1.42452393,0.292142736 1.5262655,0.25 1.63235209,0.25 L14.3676479,0.25 C14.5885618,0.25 14.7676479,0.4290861 14.7676479,0.65 C14.7676479,0.756086596 14.7255052,0.857828161 14.6504906,0.932842712 L8.28284271,7.30049062 C8.126633,7.45670034 7.873367,7.45670034 7.71715729,7.30049062 Z" id="path-1"></path>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Program-Dashboard---left-nav-mouse-hover" transform="translate(-225.000000, -148.000000)">
+            <g id="Group-29" transform="translate(225.000000, 148.000000)">
+                <circle id="Oval" fill="#006EF5" cx="15" cy="15" r="15"></circle>
+                <g id="down-arrow" transform="translate(13.000000, 15.000000) rotate(90.000000) translate(-13.000000, -15.000000) translate(5.000000, 11.000000)">
+                    <mask id="mask-2" fill="white">
+                        <use xlink:href="#path-1"></use>
+                    </mask>
+                    <use id="Mask" fill="#308CFF" xlink:href="#path-1"></use>
+                    <g id="🎨-color" mask="url(#mask-2)" fill="#FFFFFF">
+                        <g transform="translate(-3.000000, -9.000000)" id="primary-blue">
+                            <rect transform="translate(11.000000, 11.000000) rotate(90.000000) translate(-11.000000, -11.000000) " x="0" y="0" width="22" height="22"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

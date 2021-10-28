@@ -1,0 +1,87 @@
+        <div class="modal-body viewmodal-body">
+        <div class="closepopup">
+            <img src="{{assetPath}}images/close.svg" (click)="closeModel()" class="close close-font pointer-class">
+    
+        </div>
+        <h4 class="popup-heading buywindowname">{{ data.buyWindowName}}</h4>
+        <div id="dropdownexpand" ngbDropdown class="d-inline-block">
+            <div class="btn drop-down-button" id="dropdownBasic1" ngbDropdownToggle>
+                <!-- <span class="categoryname" >{{ selectedProgram && selectedProgram.programName }}</span> -->
+                <div attr.id="{{selectedProgram.programName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(selectedProgram.programName)" class="programnametruncate truncate-programname categoryname" *ngIf="selectedProgram != undefined" >{{ selectedProgram && selectedProgram.programName }}</div>
+                <i class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+            </div>
+            <div style="width: 100%"  ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                <div  *ngFor="let program of programDetails let i=index" (click)="selectProgram(program)" class="row dropdown-row" ngbDropdownItem>
+                    <div class="col-12">
+                    <!-- <span class="itemList-name" >{{program.programName}}</span> -->
+                    <span attr.id="{{program.programID}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExistsForDropdownItem(program)" class="programnameitemtruncate truncate-programname-list itemList-name" >{{program.programName}}</span>
+                     <br>
+                    </div>                
+                </div>
+            </div>
+          </div>
+          <div class="program-details" *ngIf="programDetails.length>0">
+                <div class="title">{{ resourceMessage && resourceMessage['ProgramDetailsLbl'] }}</div>
+                <div class="row pgmdetails" *ngIf="selectedProgram != undefined">
+                    <div class="col-md-3" *ngIf="selectedProgram != undefined">
+                        <app-image-card [type]="'program'"  [thumbnailImagePath]="selectedProgram.thumbnailImagePath" [isround]="false"></app-image-card>
+                    </div>
+                    <div class="col-md-9">
+                        <div class="row">
+                            <div col-md-12>
+                                <div class="programname">{{selectedProgram.programName}}</div>
+                                <div class="dateclass">{{selectedProgram.startDate | date:'MM/dd/YYYY'}} - {{selectedProgram.endDate | date:'MM/dd/YYYY'}}</div>
+                            </div>
+                            <div col-md-12>
+                                <div class="col-md-10" [innerHTML]="selectedProgram.programDescription"></div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>                   
+                </div>
+          </div>
+          <div *ngIf="programItemList && programItemList.length" class="element-list">
+            <div class="title">{{ resourceMessage && resourceMessage['ElementDetailsLbl'] }}</div>
+            <div class="row item-heading-row">
+                <div class="col-1"></div>
+                <div class="col-3 imagelbl">
+                    <p class="list-heading">{{ resourceMessage && resourceMessage['Imagelbl'] }}</p>
+                    </div>
+                    <div class="col-4">
+                        <p class="list-heading">{{ resourceMessage && resourceMessage['Elementnamelbl'] }}</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="list-heading">{{ resourceMessage && resourceMessage['Pricelbl'] }}</p>
+                    </div>
+                    <div class="col-2">
+                        <p class="list-heading">{{ resourceMessage && resourceMessage['Notelbl'] }}</p>
+                    </div>
+            </div>  
+            <div *ngFor="let item of programItemList let i=index" class="row item-list-row">
+                <div class="col-1 index">{{i+1}}</div>
+                <div class="col-3">
+                    
+                    <div class="row elementrow">
+                       
+                        <div class="col-8" style="padding-right: 0;padding-left: 0">
+                            <app-image-card [type]="'programElement'" [thumbnailImagePath]="item.thumbnailImagePath" [isround]="false"></app-image-card>
+                        </div>
+                    </div>
+                    </div>
+                    <div style="align-self: center;" class="col-4">
+                        <div>
+                            <span class="itemList-name" >{{item.externalItemID}}</span> <br>
+                            <span class="itemList-long-desc">{{item.shortDescription}}</span> <br>
+                            <span class="itemList-short-desc">{{item.categorydescription}}</span>
+                        </div>
+                    </div>
+                    <div style="align-self: center;" class="col-2">
+                        <p class="list-column-text">${{item && item.unitPrice}}</p>
+                    </div>
+                    <div style="align-self: center;" class="col-2">
+                        <p class="list-column-text">{{item && item.notes}}</p>
+                    </div>
+            </div>
+        </div>  
+    </div>

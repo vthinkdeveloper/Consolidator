@@ -1,0 +1,317 @@
+@import '../../../variable.scss';
+.example-container {
+    display: flex;
+    flex-direction: column;   
+  }
+  
+  .example-header {
+    min-height: 64px;
+    padding: 8px 24px 0;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  
+  .mat-table {
+    overflow: auto;
+  }
+  
+  .element-row {
+    position: relative;
+  }
+  .edit-order{
+    cursor: pointer;
+  }
+  
+  // .element-row:not(.expanded) {
+  //   cursor: pointer;
+  // }
+  
+  // .element-row:not(.expanded):hover {
+  //   background: #f5f5f5;
+  // }
+  
+  .element-row.expanded {
+    background-color: var(--app-selection-background-color) !important;
+    border-right: 1px solid rgba(0, 43, 245, .5);
+    border-left: 1px solid rgba(0, 43, 245, .5);
+    border-top: 1px solid rgba(0, 43, 245, .5);
+  }
+
+  .archive {
+    height: 19px;
+    color: var(--app-background-color);
+    font-family: $font-family-medium;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19px;    
+    padding-left: 20px;
+    padding-right: 20px;
+    cursor: pointer;
+    pointer-events: visible;
+  }
+
+  .date-class {
+    font-family: $font-family-medium;
+    font-size: 14px;
+  }
+
+  .mat-cell {
+    font-family: $font-family-Semibold;
+    font-size: 14px !important;
+  }
+  .startdate{
+    font-family: $font-family-regular;
+  }
+  .cdk-column-buyWindowName{
+    display: block !important;
+    justify-content: left !important;
+    text-align: left !important;
+    flex: 0 0 20%;
+  }
+
+  .cdk-column-programName{
+    justify-content: left !important;
+    text-align: left !important;
+    flex: 0 0 25%;
+  }
+
+  .add-program {
+    height: 19px;
+    color: var(--app-background-color);
+    font-family: $font-family-medium;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19px;
+    cursor: pointer;
+    pointer-events: visible;
+  }
+
+  .publish {
+    height: 19px;
+    color: var(--app-background-color);
+    font-family: $font-family-medium;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 19px;
+    cursor: pointer;
+    pointer-events: visible;
+  }
+  .mat-cell{
+    color: var(--app-primarytext-color) !important;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center;
+    justify-content: center;
+  }
+  .mat-header-cell {   
+    color: var(--app-primarytext-color) !important;
+    font-family: $font-family-bold;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 22px;
+    justify-content: center;
+    display: flex !important;
+}
+.arrow-down {
+    color:  var(--app-background-color);
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .fa-caret-down{
+    color: var(--app-background-color) !important;
+    pointer-events: auto;
+    cursor: pointer;
+  }
+
+  .pagination-item {
+    color: var(--app-primarytext-color);
+    font-family: $font-family-medium;
+    font-size: 14px;
+    text-align: center;
+  }
+  .selectedPage {
+    background: var(--app-background-color);
+    border-radius: 50%;
+    height: 30px;
+    width: 30px;
+    color: white;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 20px;
+    text-align: center;
+    padding-top: 5px;
+  }
+  .pagination-icons {
+    transform: scale(2.5,2.5);
+    margin: 25px;
+  }
+  .sort{
+    padding-right: 10px;
+    pointer-events: visible;
+    cursor: pointer;
+}
+
+.mat-column-arrow{
+    word-wrap: break-word !important;
+    white-space: unset !important;
+    flex: 0 0 10% !important;
+    width: 10% !important;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+  
+    word-break: break-word;
+  
+    -ms-hyphens: auto;
+    -moz-hyphens: auto;
+    -webkit-hyphens: auto;
+    hyphens: auto;
+}
+
+    .mat-row, .mat-header-row{
+    border-left: 1px solid rgba(0,0,0,.12);
+    border-right: 1px solid rgba(0,0,0,.12);
+    }
+
+
+.hide-class{
+    display: none;
+}
+
+.mobile-description {
+  font-family: $font-family-medium;
+  font-size: 12px;
+  color: #A6A6A6;
+  display: contents;
+}
+
+.programName{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+  margin-bottom: 5px;
+}
+
+.buywindownamemobile{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+}
+
+.programnamemobile{
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+  }
+
+.truncate-overflow {
+  --max-lines: 2;
+    --lh: 1.3rem;
+    position: relative;
+    max-height: calc(var(--lh) * var(--max-lines));
+    overflow: hidden;
+    padding-right: 1rem;
+}
+
+.cdk-column-locations{
+    text-align: center;
+    justify-content: center;
+    flex: 0 0 15%;
+}
+.cdk-column-itemCount{
+    flex: 0 0 12%;
+    
+}
+
+.cdk-column-userCount{
+    flex: 0 0 18%;
+    
+}
+.mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+    padding-left: 50px !important;
+}
+
+.itemcountclass{
+    font-family: $font-family-medium;
+}
+.usercountclass{
+    font-family: $font-family-medium;
+}
+
+.locationclass{
+    font-family: $font-family-medium;
+    text-align: center;
+}
+
+@media (max-width: 1024px) {
+    .mat-header-cell{
+        font-family: $font-family-Semibold;
+    }
+    .mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+        padding-left: 10px !important;
+        display: block;
+    }
+    .mat-column-programName {
+        width: 40% !important;
+        flex: 0 0 40% !important;
+     }
+
+     .mat-column-userCount {
+      width: 25% !important;
+      flex: 0 0 25% !important;
+    }
+
+    .mat-column-locations {
+      width: 20% !important;
+      flex: 0 0 20% !important;
+    }
+    
+    .mat-column-programId {
+      width: 15% !important;
+      flex: 0 0 15% !important;
+    }
+
+     .dot {
+      display: none !important;
+     }
+  
+  }
+
+  @media all and (min-device-width: 1024px) and (max-device-width: 1253px) { 
+    .mat-header-cell{
+        font-family: $font-family-Semibold;
+    }
+    .mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+        padding-left: 10px !important;
+        display: block;
+    }
+  }
+
+  @media only screen and (min-device-width : 1024px) and (max-device-width : 1253px) and (orientation : landscape) {  
+    .mat-header-cell{
+        font-family: $font-family-Semibold;
+    }
+    .mat-cell:first-of-type, mat-header-cell:first-of-type, mat-footer-cell:first-of-type {
+        padding-left: 10px !important;
+        display: block;
+    }
+  }
+.programnamemobile{
+    font-family: $font-family-medium;
+    font-size: 12px;
+}
+.itemcountmobile{
+    font-family: $font-family-medium;
+    font-size: 12px;
+    color: #000;
+}

@@ -1,0 +1,63 @@
+@import '../../variable.scss';
+
+.footer {
+    height: 70px;
+    background-color:var(--footer-back-color);
+  
+    .body {
+      width: 100%;
+  
+      .help-section {
+  
+        .label {
+          color: var(--footer-front-color);
+          font-family: $font-family-regular;
+          font-size: 16px;
+          letter-spacing: 0;
+          line-height: 19px;
+          margin-bottom: 10px;
+        }
+  
+        .contacts {
+          color: #CCD2D9;
+          font-family: $font-family-regular;
+          font-size: 14px;
+          letter-spacing: 0;
+          line-height: 16px;
+        }
+  
+      }
+  
+      .logo img {
+        max-height: 34px;
+      }
+    }
+  
+  
+    .legal {
+      width: 100%;
+  
+      .copyright {
+        color: var(--footer-front-color);
+        font-family: $font-family-regular;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 16px;
+        text-align: right;
+      }
+  
+      .links {
+        color: #CCD2D9;
+        font-family: $font-family-regular;
+        font-size: 14px;
+        letter-spacing: 0;
+        line-height: 16px;
+      }
+
+      .link{
+          color: var(--footer-front-color);
+      }
+    }
+  
+  }
+  

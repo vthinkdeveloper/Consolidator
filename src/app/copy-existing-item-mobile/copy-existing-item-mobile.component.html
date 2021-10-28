@@ -1,0 +1,62 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerProgram" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+
+  <div class="container-fluid">
+    <div class="buywindowname">{{buywindowname}}</div>
+
+<div *ngIf="programItemListFromCopied && programItemListFromCopied.length" class="element-list popup-item-list">
+    <div class="header-class" >
+      <div class="copy-element-heading">{{ resourceMessage && resourceMessage['Copyfromexistinglbl'] }}</div>
+    </div>
+  <div class="itemtable">
+      <div class="row heading-row">
+          <div class="col-4">
+              <p class="list-heading imglbl imgpopuuplbl">{{ resourceMessage && resourceMessage['Imagelbl'] }}</p>
+              </div>
+              <div class="col-5">
+                  <p style="text-align: left;padding-left: 25%;" class="list-heading itemlbl">{{ resourceMessage && resourceMessage['Elementnamelbl'] }}</p>
+              </div>
+              <div class="col-3">
+                  <p style="text-align: left;" class="list-heading">{{ resourceMessage && resourceMessage['Pricelbl'] }}</p>
+              </div>
+      </div>
+      <div *ngFor="let item of programItemListFromCopied let i=index" [ngClass]="[(i % 2 === 0) ? 'even-row-background ' : 'odd-row-background']" class="row item-list popup-item">
+          <div class="col-4">
+              <div style="height: 100%;width: 100%; margin-bottom: 5%; align-items: center;" class="row">
+                  <div class="col-4 checkboxclass">                                
+                      <input style="width: 18px;height: 18px;" type="checkbox" name="checkitem" #checkboxitem value="{{item.programItemId}}" (click)="checkitem(checkboxitem)" >    
+                  </div>
+                  <div class="col-8" style="padding-right: 0;padding-left: 0; padding-top: 6%;">
+                      <app-image-card [type]="'programElement'" [thumbnailImagePath]="item.thumbnailImagePath" [isround]="false"></app-image-card>
+                  </div>
+              </div>
+              </div>
+              <div class="col-5 list-desc">
+                  <div>
+                      <span class="itemList-name" >{{item.externalItemID}}</span> <br>
+                      <span class="itemList-long-desc">{{item.shortDescription}}</span> <br>
+                      <span class="itemList-short-desc">{{item.categorydescription}}</span>
+                  </div>
+              </div>
+              <div style="text-align: center;align-self: center;" class="col-3">
+                  <p class="list-column-text">{{item && item.unitPrice | currency}}</p>
+              </div>
+      </div>
+  </div>
+  <div class="selectalldiv">
+      <input style="width: 18px;height: 18px;" type="checkbox" #selectall (change)="checkAll(selectall)" name="chk[]"> <span class="selectalltext">{{resourceMessage && resourceMessage['selectalllbl']}}</span>
+  </div>
+  
+  <div class="container">
+      <div class="text-center">
+          <button  class="button-class savebutton" [ngClass]="[enablecreatebutton ? 'valid-button' : 'invalid-button']"
+            value= "submit" type="submit" (click)="create()" >{{resourceMessage && resourceMessage['CreateBuyBtn']}}</button>
+      </div>
+  </div>
+
+</div>
+
+</div>

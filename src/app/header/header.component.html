@@ -1,0 +1,33 @@
+<div *ngIf="!appCommonFunctions.isMobileCompatibleScreen()" class="header" fxLayout="row" fxLayoutAlign="space-between center">
+<div class="row">
+  <div class="col-md-6">
+    <div  class="header-div" fxLayoutAlign="start center" fxLayoutGap="8px">
+      <img src="{{imageUrl}}" *ngIf="imageUrl" alt="Client Brand Logo">
+      <a [href]="prevurl" (click)="backtohome()" class="fake-link" fxLayout="row" fxLayoutAlign="center center"
+         target="_parent">
+        <mat-icon>arrow_left</mat-icon>
+        <span>{{ resourceMessage && resourceMessage['BacktoHome']}}</span>
+      </a>
+     
+    </div>
+  </div>
+<div class="col-md-6" style="text-align: right;">
+  <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="8px">
+    <div class="dropdown-button">
+      {{ resourceMessage && resourceMessage['welcomelbl']}}  {{ username}}
+    </div>
+  </div>
+</div>
+</div>
+</div>
+<div *ngIf="appCommonFunctions.isMobileCompatibleScreen()" class="row header-mobile">
+ <div class="col-2">
+
+ </div>
+ <div class="col-8 title-class">
+   <p>{{pageTitle}}</p>
+</div>
+<div class="col-2">
+  <img id="sidebar-button-mobile" src="{{assetPath}}images/profile-icon.svg">
+</div>
+</div>

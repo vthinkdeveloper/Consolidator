@@ -1,0 +1,96 @@
+  
+  <div class="example-container mat-elevation-z8" [ngStyle]="{'min-height':(getElementLoading() === false) ? '300px' :  ''}">
+    <mat-table #table [dataSource]="dataSource" *ngIf="this.dataSource.data.length>0"  matSort>
+
+        <ng-container matColumnDef="recent">
+            <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span class="published" *ngIf="element.statusName.toLowerCase() == 'published'"> {{ resourceMessage &&
+                resourceMessage['Publishedlbl'] }} </span> 
+                <span class="recent" *ngIf="element.recentBuy" >
+                    <img  class="new" src="{{assetPath}}images/recent.svg" alt="new">
+                </span>
+            </mat-cell>
+        </ng-container>
+       
+        <ng-container matColumnDef="buyWindowName">
+            <mat-header-cell *matHeaderCellDef  > <img  mat-sort-header (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new"> {{ resourceMessage &&
+                resourceMessage['BuyWindow'] }}</mat-header-cell>
+            <mat-cell *matCellDef="let element">
+                <span>{{element.buyWindowName}}</span> </mat-cell>
+        </ng-container>
+
+       
+        <ng-container matColumnDef="startDate">
+            <mat-header-cell *matHeaderCellDef  style="width: 20%;" > <img  mat-sort-header class="sort" src="{{assetPath}}images/sort.svg" alt="new">  {{ resourceMessage &&
+                resourceMessage['StartEndDate'] }} </mat-header-cell>
+            <mat-cell *matCellDef="let element" class="date-class" style="width: 20%;" > {{element.startDate | date:'MM/dd/YYYY'}}-{{element.endDate | date:'MM/dd/YYYY'}} </mat-cell>
+        </ng-container>
+
+        
+        <ng-container matColumnDef="buyWindowId">
+            <mat-header-cell *matHeaderCellDef style="width: 25%;" > {{ resourceMessage &&
+                resourceMessage['Actionslbl'] }}</mat-header-cell>
+            <mat-cell *matCellDef="let element" > 
+                <span *ngIf="status == 'active'" style="width: 15%;">
+                </span>
+                 <span [ngClass]="status == 'active' ? 'active-row' : 'archieve-row'">
+                    <a class="archive" *ngIf="(status == 'archived' || element.statusName.toLowerCase() == 'published') && element.hasPrograms" (click)="openDialog(element)">{{ resourceMessage && resourceMessage['Viewlnk'] }}</a>
+                    <a class="add-program" *ngIf="status == 'active' && element.statusName.toLowerCase() == 'active'" (click)="addProgram($event, element)">{{ resourceMessage && resourceMessage['AddProgramlnk'] }}</a>
+                </span> 
+                <span *ngIf="status == 'active'" style="width: 30%;">
+                    <a (click)="openArchivePopup(element)" class="archive">{{ resourceMessage &&
+                        resourceMessage['Archivelnk'] }}</a>
+                </span>
+                <span *ngIf="status == 'active'" style="width: 20%;" >
+                    <a class="publish" *ngIf="(status == 'active' && element.statusName.toLowerCase() == 'active' && canPublishRole && element.canPublish)" (click)="publish(element.buyWindowId,element.buyWindowName)" >{{ resourceMessage &&
+                        resourceMessage['Publishlnk'] }}</a>
+                </span>
+                <span *ngIf="status == 'active'" style="width: 5%;">
+                </span>
+            </mat-cell>
+        </ng-container>
+        <ng-container matColumnDef="arrow" >
+            <mat-header-cell *matHeaderCellDef style="width: 20%;" >  </mat-header-cell>
+            <mat-cell *matCellDef="let element" style="width: 20%;" > <div class="expandclass" *ngIf="element.hasPrograms" (click)="setExpandedElement(element)"> <span class="arrow-down"><i attr.id="{{element.buyWindowId}}" class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"  ></i></span> </div></mat-cell>
+        </ng-container>
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+      <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row" 
+      [cdkDetailRow]="row" [cdkDetailRowTpl]="tpl" [class.expanded]="checkItemExpanded(row)">
+      </mat-row>
+
+    </mat-table>
+    <mat-paginator style="display: none" [pageSizeOptions]="[10]"></mat-paginator>
+    <div class="row" *ngIf="this.dataSource.data.length>0" >
+        <div class="col-12" style="display: flex; justify-content: center;">
+         <div (click)="previousClicked()"><i [ngStyle]="{'color':(startIndex === 1) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(startIndex !== 1) ? 'pointer-class' : ''" class="fa fa-angle-left pagination-icons"></i></div>
+          <div *ngFor="let page of getPageList() let i=index">
+           
+          <div class="pointer-class pagination-item" style="padding: 20px;"  (click)="changePage(page)">
+            <p style="padding-top: 5px;"  [ngClass]="(page === selectedPage) ? 'selectedPage': ''">{{page}}</p>
+           </div>
+          </div>
+          <div (click)="nextClicked()"><i [ngStyle]="{'color':(endIndex === noOfPages) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(endIndex !== noOfPages) ? 'pointer-class' : ''" class="fa fa-angle-right pagination-icons"></i></div>
+        </div>
+      </div>
+
+      <app-confirm-popup  [popupObject]="popupDataObject" (okbuttonClicked)="archiveApi()" (cancelButtonClicked)="cancelArchive()"></app-confirm-popup>
+</div>
+
+<ng-template #tpl let-element>
+    <div class="mat-row detail-row" [@detailExpand]="checkItemExpanded(element) ? '*' : 'void'" [class.detail-row]="checkItemExpanded(element)" style="overflow: hidden">
+      <!-- The buywindow {{element.buyWindowName}} is created by {{element.createdBy}}  -->
+      <app-program-details (callbuy)="callbuy($event)" [canDelete]="canDelete" [status]="element.statusName.toLowerCase()" [buywindowId]="element.buyWindowId" [buyWindowName]="element.buyWindowName" [endDate]="element.endDate" [startDate]="element.startDate" [searchText]="searchText" [searchCategoryid]="searchCategoryid" [selectedElement]="selectedElement" ></app-program-details>
+      
+    </div>
+</ng-template>
+
+<div *ngIf="buywindowlist.length == 0 && getElementLoading()" class="norecords">{{ resourceMessage &&
+    resourceMessage['Norecordslbl'] }}</div>
+
+
+
+    

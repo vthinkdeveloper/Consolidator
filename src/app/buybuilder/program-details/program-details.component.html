@@ -1,0 +1,66 @@
+
+<div>
+    <span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerProgramitem" style="display: none;" >
+        <div class="loader program-item-loader">
+          <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+        </div>
+      </span>
+    <div  *ngIf="programDetails.length > 0">
+        <div class="row buywindowdetails">
+            <p class="buy-window-title">{{ resourceMessage && resourceMessage['BuyWindowDetails'] }}</p>
+          </div>
+          <div class="programdetails-div" *ngFor="let program of programDetails let i=index">
+              <div class="row title-row">
+                  <p style="font-size: 14px;" class="buy-window-title-details ">{{program.programName}}</p>
+              </div>
+              <div  class="row details">
+                  <div class="col-2">
+                    <app-image-card [thumbnailImagePath]="program.thumbnailImagePath" [type]="'program'" [isround]="false" ></app-image-card>
+                  </div>
+                  <div class="col-5">
+                      <div class="row">
+                          <div class="col-5">
+                              <p class="program-title">{{ resourceMessage && resourceMessage['Programname'] }}</p>
+                              </div>
+                              <div class="col-1 colon-class">
+                                  : 
+                              </div>
+                              <div class="col-6">
+                              <p class="program-detail">{{program.programName}}</p>
+                              </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-5">
+                              <p class="program-title">{{ resourceMessage && resourceMessage['StartEndDate'] }}</p>
+                              </div>
+                              <div class="col-1 colon-class">
+                                  : 
+                              </div>
+                              <div class="col-6" style="padding-right: 0;">
+                              <p class="program-detail">{{program.startDate | date:'MM/dd/YYYY'}} - {{program.endDate | date:'MM/dd/YYYY'}}  </p>
+                              </div>
+                      </div>
+                      <div class="row">
+                          <div class="col-5">
+                              <p class="program-title">{{ resourceMessage && resourceMessage['noofitems'] }}</p>
+                              </div>
+                              <div class="col-1 colon-class">
+                                  : 
+                              </div>
+                              <div class="col-6">
+                              <p class="program-detail"> {{program.numberOfItems}} </p>
+                              </div>
+                      </div>
+                  </div>
+                  <div class="col-5" style="align-items: center;padding-top: 2%;padding-left: 10%">
+                    <u class="view-class linkclass" (click)="openDialog(program)" *ngIf="status.toLowerCase() == 'archived' || status.toLowerCase() == 'published' " >{{ resourceMessage && resourceMessage['Viewlnk'] }}</u>  
+                    <u class="delete-class modify linkclass" *ngIf="status.toLowerCase() == 'active'" (click)="modifyProgram(program,i)">{{ resourceMessage && resourceMessage['Modifybtn'] }}</u> 
+                    <u class="delete-class linkclass" *ngIf="status.toLowerCase() == 'active' && canDelete" (click)="openDeletePopup(program)">{{ resourceMessage && resourceMessage['Deletebtn'] }}</u>  
+                  </div>
+              </div>
+          </div>
+    </div>  
+    <app-confirm-popup [popupObject]="popupDataObject" (okbuttonClicked)="archiveApi()" (cancelButtonClicked)="cancelArchive()"></app-confirm-popup>
+    
+    
+</div>

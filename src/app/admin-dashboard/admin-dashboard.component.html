@@ -1,0 +1,10 @@
+<div class="container-fluid">
+    <div *ngIf="!appConstants.isMobileCompatibleScreen()" class="buywindowname">{{this.resourceMessage && this.resourceMessage['AdminDashboard']}}</div>
+    <div class="row panel">
+         <div *ngFor="let menu of menuArray; let i=index" class="col-6 col-sm-4 col-md-3 menu-column">
+           <img class="menu-image pointer-class" [src]="over[i] ? menu.hoverLogo : menu.logo" (click)="redirect(menu)" 
+           (mouseover)="over[i] = true" (mouseout)="over[i] = false">
+           <div class="menu-title pointer-class">{{menu.name}}</div>
+         </div>
+    </div>
+</div>

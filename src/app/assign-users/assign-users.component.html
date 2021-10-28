@@ -1,0 +1,150 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerOrder" style="display: none;" >
+  <div class="loader">
+    <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+  </div>
+</span>
+
+<div class="users-div">
+    <span *ngIf="selectedUserNameArray.length"  class="component-heading">{{resourceMessage &&
+      resourceMessage['assignUserslbl']}}</span>
+<div *ngIf="selectedUserNameArray.length" class="row users-row">
+    <div *ngFor="let name of selectedUserNameArray let i=index" class="col-12 users-column"  [ngClass]="(i === (selectedUserNameArray.length - 1)) ? 'border-bottom-zero' : ''">
+     <p attr.id="{{name.fullName}}{{i}}" [matTooltipClass]="'my-tooltip'" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(name,i)" class="user-name">{{name && name.fullName}}</p> 
+    </div>
+</div>
+<div  *ngIf="!isAdminCompleteProgram"  class="search-row">
+    <div class="row mobile-row" style="margin-left: 0px;">
+    <div class="col-12 col-md-4 search-column padding-zero">
+        <div ngbDropdown class="d-inline-block" style="width: 100%;">
+            <button class="btn btn-outline-primary" id="dropdownBasic1" style="width: 100%;height: 40px;" ngbDropdownToggle>
+                <!-- <span id="categoryname">{{resourceMessage &&
+                  resourceMessage['filterlocationlbl']}} </span> -->
+                  <span *ngIf="!getLocationExists()" id="categoryname">{{resourceMessage &&
+                    resourceMessage['filterlocationlbl']}}</span>
+                    <span *ngIf="getLocationExists()" id="categoryname">
+                      <span style="font-size: 13px;" >{{ getFirstLocation() }}</span>
+                      <span class="number-count" *ngIf="getLocationCount() > 1"> +{{ getLocationCount() - 1 }}</span>
+                    </span>
+                <span id="categoryid" #categoryid style="display: none;">0</span>
+                <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"></i>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="width: 100%;">
+              <mat-tree [dataSource]="treeDataSource" [treeControl]="treeControl">
+                <mat-tree-node *matTreeNodeDef="let node" id={{node.Id}} matTreeNodeToggle matTreeNodePadding matTreeNodePaddingIndent="20">
+                  <button mat-icon-button disabled></button>
+                  <mat-checkbox class="checklist-leaf-node" [checked]="checklistSelection.isSelected(node)"
+                    (change)="changeNodeSelection(node)">{{node.Name}}</mat-checkbox>
+                </mat-tree-node>
+              
+                <mat-tree-node *matTreeNodeDef="let node; when: hasChild" id={{node.Id}} matTreeNodePadding matTreeNodePaddingIndent="20">
+                  <button mat-icon-button matTreeNodeToggle
+                          [attr.aria-label]="'toggle ' + node.filename">
+                    <mat-icon *ngIf="hasChild" class="mat-icon-rtl-mirror">
+                      {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+                    </mat-icon>
+                  </button>
+                  <mat-checkbox [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)"
+                    (change)="todoItemSelectionToggle(node)">{{node.Name}}</mat-checkbox>
+                </mat-tree-node>
+              </mat-tree>
+            </div>
+          </div>
+    </div>
+    <div class="col-12 col-md-4 search-column padding-zero">
+        <div ngbDropdown class="d-inline-block" style="width: 100%;float: right;" autoClose="outside">
+            <button class="btn btn-outline-primary" id="dropdownBasic1" style="width: 100%;height: 40px;" ngbDropdownToggle>
+                <span *ngIf="!getFilterGroupValues()" id="categoryname">{{resourceMessage &&
+                  resourceMessage['filterUsergrouplbl']}}</span>
+                  <div *ngIf="getFilterGroupValues()" id="categoryname">
+                    <div style="max-width: 70%;display: inline-block;" class="dropdown-name-class">{{ getFirstName() }}</div>
+                    <div style="display: inline-block;" class="number-count" *ngIf="getFilterListCount() > 1"> +{{ getFilterListCount() - 1 }}</div>
+                  </div>
+                <span id="categoryid" #categoryid style="display: none;">0</span>
+                  <span [ngClass]="(getFilterGroupValues()) ? 'drop-down-bottom' : ''">
+                    <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"></i>
+                  </span>
+            </button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1" style="width: 100%;">
+              <mat-checkbox ngbDropdownItem class="checklist-leaf-node" (change)="selectFilterGroup(user)" *ngFor="let user of userGroupList" 
+             >{{ user.groupName }}</mat-checkbox>
+            </div>
+          </div>
+    </div>
+    <div class="col-12 col-md-4 search-column padding-zero">
+      <div class="calender-input">
+          <input class="search-box input-class input-class-name" [(ngModel)] = "searchText"  (keyup.enter)="onFieldChange($event)" #txtsearch placeholder="{{resourceMessage &&
+            resourceMessage['Searchlbl'] }}">
+          <button class="fa fa-search search-button" aria-hidden="true" (click)="searchUsers(searchText)" ></button>
+      </div>
+  </div>
+    </div>
+</div>
+<div class="row result-row" *ngIf="this.dataSource && this.dataSource.data && this.dataSource.data.length>0 && !isAdminCompleteProgram">
+ <div class="col-6 result-text">
+  {{resourceMessage &&
+    resourceMessage['Resultslbl']}}
+ </div>
+ <div class="col-6 search-text">
+  <mat-checkbox style="float: right;" [(ngModel)] = "selectAll" [checked]="isSelectAll()" (ngModelChange)="changeSelectAll($event)" class="example-margin"> <span class="search-label">{{ resourceMessage &&
+    resourceMessage['selectalllbl'] }}</span></mat-checkbox>
+ </div>
+</div>
+<div *ngIf="!appCommon.isMobileCompatibleScreen() && !isAdminCompleteProgram">
+  <mat-table  #table [dataSource]="dataSource" *ngIf="this.dataSource && this.dataSource.data && this.dataSource.data.length>0">
+    <ng-container matColumnDef="recent">
+      <mat-header-cell *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)] = "element.selected" (ngModelChange)="selectItem($event,element)" class="example-margin"></mat-checkbox>
+      </mat-cell>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef><span class="column-header-text">{{ resourceMessage &&
+      resourceMessage['nameLbl'] }}</span></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        <span class="column-text">{{element.fullName}}</span> </mat-cell>
+  </ng-container>
+  
+  
+  
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef><span class="column-header-text">{{ resourceMessage &&
+      resourceMessage['Emaillbl'] }}</span></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        <span class="column-text">{{element.userName}}</span> </mat-cell>
+  </ng-container>
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;" matRipple class="element-row">
+  </mat-row>
+  </mat-table>
+</div>
+
+<div *ngIf="appCommon.isMobileCompatibleScreen() && !isAdminCompleteProgram">
+  <mat-table  #table [dataSource]="dataSource" *ngIf="this.dataSource && this.dataSource.data && this.dataSource.data.length>0">
+    <ng-container matColumnDef="recent">
+      <mat-header-cell style="display: none;" *matHeaderCellDef> </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [(ngModel)] = "element.selected" (ngModelChange)="selectItem($event,element)" class="example-margin"></mat-checkbox>
+      </mat-cell>
+  </ng-container>
+  
+  
+  <ng-container matColumnDef="name">
+    <mat-header-cell *matHeaderCellDef><span class="column-header-text mobile-padding">{{ resourceMessage &&
+      resourceMessage['nameLbl'] }}</span></mat-header-cell>
+    <mat-cell *matCellDef="let element">
+        <span class="column-text">{{element.fullName}}</span> </mat-cell>
+  </ng-container>
+  
+  <mat-header-row *matHeaderRowDef="displayedColumnsMobile"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumnsMobile;" matRipple class="element-row">
+  </mat-row>
+  </mat-table>
+</div>
+
+<div class="row save-button-row" *ngIf="this.dataSource && this.dataSource.data && this.dataSource.data.length>0 && !isAdminCompleteProgram">
+ <button [ngClass]="[isItemsSelected() ? 'valid-button' : 'invalid-button']" class="save-button" (click)="saveAssignUsers()">{{ resourceMessage &&
+  resourceMessage['saveuser'] }}</button>
+  </div>
+</div>

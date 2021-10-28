@@ -1,0 +1,206 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerprogram" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+  
+<div class="container-fluid">
+    <div class="buywindowname">{{buywindowname}}</div>
+    <div class="row panel">
+        <div *ngIf="!isAdminCreatePage" class="col-md-4">
+            <div class="col-md-12 leftpanel left-top">
+                <div class="selectprglbl">{{ resourceMessage && resourceMessage['SelectProgramlbl'] }}</div>
+                <div class="btndiv" (click)="tabSelection(false);setStep(0);refreshFormio()">
+                            <input type="button" id="create-button" style="background: url(assets/images/createprg.svg) no-repeat 5% 49%;"  [ngClass]="isCopyProgramSelected ? 'non-selectedBorder': 'selected-border'" value="{{ resourceMessage && resourceMessage['CreateNewPgmBtn'] }}" ng class="btn btn-primary btncreatenewprogram">
+                </div>
+                <div *ngIf="canCopyProgram" class="btndiv" (click)="tabSelection(true)">
+                    <input type="button" id="copy-prgm"  style="background: url(assets/images/copy.svg) no-repeat 5% 49%;" [ngClass]="isCopyProgramSelected ? 'selected-border': 'non-selectedBorder'"  value="{{ resourceMessage && resourceMessage['CopyExistingPgmBtn'] }}" class="btn btn-primary btncreatenewprogram copyprg">
+                </div>
+            </div>
+            <div class="col-md-12 leftpanel prgmdetails margin-bottom" [ngStyle]="{'height': (programDetails && programDetails.length === 0 && appCommonFunctions.isMobileCompatibleScreen()) ? '0PX' : '225px' }">
+                <div *ngFor="let program of programDetails let i=index">
+                    <div class="program-card row" id="programcard-{{i}}"  >
+                            <div class="col-2 col-md-2 icon-div" *ngIf="canDelete">                                
+                                <img src="{{deletepath}}" id="deleteimg-{{i}}" (click)="openDeletePopup(program)" title="{{ resourceMessage && resourceMessage['deletethisprogram'] }}" class="deleteimg pointer-class">
+                                <img src="{{clonepath}}" id="cloneimg-{{i}}" (click)="cloneProgram(program)"  *ngIf="canClone" class="pointer-class cloneimg" title="{{ resourceMessage && resourceMessage['clonethisprogram'] }}">
+                            </div>
+                            <!-- change to col-md-10 when we add icon-div -->
+                            <div class="col-10 col-md-10 pgmdetails " (click)="getProgramDetails(program.programID, i);setStep(0)" >
+                                <div class="row" style="margin: auto;">
+                                    <div class="col-6 col-md-8 program-name programnameitemtruncate truncate-overflow"  #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(i,program.programName)" id="programname-{{i}}">{{ program && program.programName }}</div>                                    
+                                    <div class="col-4 img-div" >                            
+                                        <app-image-card [type]="'program'" [thumbnailImagePath]="program.thumbnailImagePath" [isround]="false"></app-image-card>
+                                        </div> 
+                                </div>
+                            </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-12 publishpanle" *ngIf="!isCopyProgramSelected && canPublish && canPublishUsingrole ">
+                <input type="button" id="publish-button" (click)="publish()"  value="{{ resourceMessage && resourceMessage['PublishBtn'] }}" ng class="btn btn-primary btnpublish">
+            </div>
+        </div>
+        <div [ngClass]="!isAdminCreatePage ? 'col-md-8' : 'col-md-12'">
+            <div *ngIf="!isCopyProgramSelected" class="col-md-12 rightpanel">
+                <mat-accordion class="example-headers-align" multi>
+                    <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0);removeSession()" hideToggle>
+                        <mat-expansion-panel-header>
+                            <mat-panel-title>
+                              <span [ngStyle]="{'color':(step === 0) ? appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appFontColor ? appCommonFunctions.getTheme().color.appFontColor : '#00000' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appPrimaryTextColor ? appCommonFunctions.getTheme().color.appPrimaryTextColor : '#3a3a3a' }" class="titleclass">{{ (isAdminCreatePage && !isAdminCompleteProgram)  ?  resourceMessage && resourceMessage['modifyProgram'] : isAdminCompleteProgram ? resourceMessage && resourceMessage['viewProgram'] : resourceMessage && resourceMessage['ModifyPgmlbl'] }}</span> 
+                              <span class="material-icons open">
+                                <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"  ></i>
+                              </span>
+                              <span class="material-icons close">
+                                <i class="fa fa-caret-up caret-arrow fa-lg" aria-hidden="true"  ></i>
+                              </span>
+                            </mat-panel-title>                        
+                          </mat-expansion-panel-header>
+                          
+                          <form [formGroup]="createProgramForm" (ngSubmit)="submitForm()">
+                            <div class="popup-input pgminput">
+                                <label class="input-label">{{ resourceMessage && resourceMessage['Programname'] }}</label>
+                                <input style="padding-left: 4%" class="input-class input-class-name" maxlength="300" [(ngModel)]="ProgramName"  autocomplete="off"
+                                    formControlName="Programname" required="required" />
+                                <div *ngIf="createProgramForm.controls['Programname'].invalid && (submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                                    resourceMessage['PgmNameVal'] }}</div>
+                            </div>
+                            <div class="popup-input" [attr.disabled]="isAdminCompleteProgram">
+                                <label class="input-label">{{ resourceMessage && resourceMessage['ProgramDesclbl'] }}</label>
+                                <angular-editor [attr.disabled]="isAdminCompleteProgram"  (keypress)="getcharcount($event)" (paste)="get1000charcount($event)"  [(ngModel)]="htmlContent" formControlName="programDescription" readonly
+                                 [config]="config"></angular-editor>
+                            </div>
+                            <div class="popup-input">
+                                <label class="input-label">{{ resourceMessage && resourceMessage['StartDateLbl'] }}</label>
+                                <div class="calender-input">
+                                    <i class="fa fa-calendar calender-input-img cal-icon" aria-hidden="true"></i>
+                                    <input #startDatePicker="bsDatepicker"  type="text" autocomplete="off" [(ngModel)]="sDate"
+                                        placeholder="MM/DD/YYYY" [minDate]="minDate" [maxDate]="maxDate" formControlName="startDate" (keydown)="appCommonFunctions.preventTyping($event)" [dateCustomClasses]="dateCustomClasses" class="input-class" bsDatepicker>
+                                    <i [ngClass]="[isAdminCompleteProgram ? 'disable-click ': '']" (click)="startDatePicker.toggle()" class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                                </div>
+                                <div *ngIf="createProgramForm.controls['startDate'].invalid && (submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                                    resourceMessage['StartDateVal'] }}</div>
+                            </div>
+                            <div class="popup-input" style="padding-bottom: 0%;">
+                                <label class="input-label">{{ resourceMessage && resourceMessage['EndDateLbl'] }}</label>
+                                <div class="calender-input">
+                                    <i class="fa fa-calendar calender-input-img cal-icon" aria-hidden="true"></i>
+                                    <input #endDatePicker="bsDatepicker"  type="text" autocomplete="off" [(ngModel)]="EndDate"
+                                        placeholder="MM/DD/YYYY" [minDate]="minDate" [maxDate]="maxEndDate" formControlName="endDate" (keydown)="appCommonFunctions.preventTyping($event)" [dateCustomClasses]="dateCustomClasses" class="input-class" bsDatepicker>
+                                    <i [ngClass]="[isAdminCompleteProgram ? 'disable-click ': '']"(click)="endDatePicker.toggle()"  class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                                </div>
+                                <div *ngIf="((createProgramForm.controls['endDate'].invalid && createProgramForm.controls.endDate.errors.required) && submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                                    resourceMessage['EndDateVal'] }}</div>
+                                <div *ngIf="((createProgramForm.controls['endDate'].invalid && createProgramForm.controls.endDate.errors.mustMatch) && submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                                    resourceMessage['BuyDateVal'] }}</div>
+                
+                                    <div *ngIf="!isAdminCompleteProgram" style="padding-top: 5%;">
+                                        <div class="row">
+                                            <div *ngIf="((!isAdminCompleteProgram && !appCommonFunctions.isMobileCompatibleScreen()) || (!isAdminCompleteProgram && appCommonFunctions.isMobileCompatibleScreen() && !IsremoveImage))" class="col-12 col-xs-12 col-sm-12 col-md-12 col-md-12 col-lg-12 col-xl-8">
+                                                <div class="dropzone" appDragDrop [isCreateNewProgram]="isCreateNewProgram" (uploadElementCreatePage)="createProgramFileChange($event)" (filesDropped)="handleDrop($event)" (showInvalidError)="showerrormessage($event)">
+                                                    <div for="file" class="text-wrapper">
+                                                        <div for="file" class="centered">
+                                                            <input type="file" [disabled]="isAdminCompleteProgram"  name="file" id="file" accept="image/gif, image/jpeg, image/png, image/jpg">
+                                                            <label for="file">
+                                                                <img src="{{assetPath}}images/Path.svg">
+                                                            </label>
+                                                            <label class="input-file-image" for="file">{{ resourceMessage && resourceMessage['DragandDrop'] }}</label>
+                                                            <label class="input-file-image or-text" for="file">or</label>
+                                                            <label class="input-file-image browse-files-text" for="file">{{ resourceMessage && resourceMessage['BrowseFileslbl'] }}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="((!appCommonFunctions.isMobileCompatibleScreen()) || (appCommonFunctions.isMobileCompatibleScreen() && IsremoveImage) || (appCommonFunctions.isMobileCompatibleScreen() && isAdminCompleteProgram))" class="col-12 col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-4 imgdiv">
+                                                <img class="list-image-class"  src="{{imageNotavailable}}" id="image">
+                                            </div>
+                                            <div class="row lastdiv">
+                                                <div class="col-8">
+                                                    <div id="createinvalidformt"></div>
+                                                </div>
+                                                <div class="col-4 removeclass">
+                                                    <a class="remove-image" (click)="removeImage($event)" [ngClass]="[!IsremoveImage ? 'disableClassLink' : '']" >{{ resourceMessage && resourceMessage['RemoveImagelbl'] }}</a>
+                                                    <!-- <input type="button" value="remove" (click)="removeImage($event)">   -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                 <div *ngIf="isAdminCompleteProgram" style="padding-top: 5%;">
+                                    <div class="row">
+                                        <div class="complete-screen-image">
+                                            <img src="{{imageNotavailable}}" id="image">
+                                        </div>
+                                        </div>
+                                 </div>
+
+                            </div>
+                            <div *ngIf="formDefinition && formDefinition !== {} && isFormioExists()" class="col-12" style="margin-top: 10px">
+                                <formio #form [refresh]="refreshForm" (change)="onChange($event)" [submission]="submission" [form]="formDefinition"></formio>
+                            </div>
+                            <div *ngIf="!isAdminCompleteProgram" class="container">
+                                <div class="text-center">
+                                    <button class="button-class savebutton"   [ngClass]="[isLoading ? 'submit': '',!createProgramForm.valid ? 'invalid-button' : 'valid-button']"
+                                      type="submit">{{ resourceMessage && resourceMessage['SavePgmbtn'] }}</button>
+                                </div>
+                            </div>
+                          </form>
+                  
+                    </mat-expansion-panel>
+                  
+                    
+                    <mat-expansion-panel class="createitempanel" [expanded]="step === 1" (opened)="setStep(1);removeSession()" hideToggle [disabled]="checkItemDisabled()">
+                      <mat-expansion-panel-header>
+                        <mat-panel-title>
+                            <span [ngStyle]="{'color':(step === 1) ? appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appFontColor ? appCommonFunctions.getTheme().color.appFontColor : '#00000' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appPrimaryTextColor ? appCommonFunctions.getTheme().color.appPrimaryTextColor : '#3a3a3a' }" class="titleclass">{{ (isAdminCreatePage && !isAdminCompleteProgram) ? resourceMessage && resourceMessage['modifyItem'] : isAdminCompleteProgram ? resourceMessage && resourceMessage['viewItem'] : resourceMessage && resourceMessage['ModifyElementlbl'] }}</span> 
+                            <span class="material-icons open">
+                                <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"  ></i>
+                              </span>
+                              <span class="material-icons close">
+                                <i class="fa fa-caret-up caret-arrow fa-lg" aria-hidden="true"  ></i>
+                              </span>
+                        </mat-panel-title>
+                      </mat-expansion-panel-header>
+                  
+                    <app-modify-program #modifyProgramComponent [createdFromProgramId]="creteFromProgrmIdtoModifyProgram" [iscopiedprogram]="iscopiedprogram" (setStep)="setStep($event)" (loadprogramdetails)="loadProgramDetailsfromitem($event);"></app-modify-program>
+                      
+                    </mat-expansion-panel>
+
+                    <mat-expansion-panel *ngIf="isAdminCreatePage" class="createitempanel" [expanded]="step === 3" (opened)="setStep(3);removeSession()" hideToggle>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <span [ngStyle]="{'color':(step === 2) ? appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appFontColor ? appCommonFunctions.getTheme().color.appFontColor : '#00000' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appPrimaryTextColor ? appCommonFunctions.getTheme().color.appPrimaryTextColor : '#3a3a3a' }" class="titleclass">{{resourceMessage && resourceMessage['assignUsers']}}</span> 
+                              <span class="material-icons open">
+                                  <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"  ></i>
+                                </span>
+                                <span class="material-icons close">
+                                  <i class="fa fa-caret-up caret-arrow fa-lg" aria-hidden="true"  ></i>
+                                </span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-assign-users [hierarchyLocation]="hierarchyLocation"></app-assign-users>
+                      </mat-expansion-panel>
+
+                      <mat-expansion-panel *ngIf="isAdminCreatePage" class="createitempanel" [expanded]="step === 4" (opened)="setStep(4);removeSession()" hideToggle>
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                              <span [ngStyle]="{'color':(step === 4) ? appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appFontColor ? appCommonFunctions.getTheme().color.appFontColor : '#00000' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appPrimaryTextColor ? appCommonFunctions.getTheme().color.appPrimaryTextColor : '#3a3a3a' }" class="titleclass">{{resourceMessage && resourceMessage['assignLocation']}}</span> 
+                              <span class="material-icons open">
+                                  <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"  ></i>
+                                </span>
+                                <span class="material-icons close">
+                                  <i class="fa fa-caret-up caret-arrow fa-lg" aria-hidden="true"  ></i>
+                                </span>
+                          </mat-panel-title>
+                        </mat-expansion-panel-header>
+                        <app-assign-location ></app-assign-location>
+                      </mat-expansion-panel>
+                    
+                  </mat-accordion>
+            </div>
+            <div *ngIf="isCopyProgramSelected" class="col-md-12 rightpanel">
+                   <app-copy-existing-program [programList]="programDetails" (copyProgramFromBuyWindow)="copyProgramFromBuyWindow($event)"> </app-copy-existing-program>
+            </div>
+        </div>
+    </div>
+    <app-confirm-popup [popupObject]="popupDataObject" (okbuttonClicked)="archiveApi()" (cancelButtonClicked)="cancelArchive()"></app-confirm-popup>
+</div>
+

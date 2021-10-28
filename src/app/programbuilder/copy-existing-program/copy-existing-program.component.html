@@ -1,0 +1,44 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerprogram" style="display: none;" >
+  <div class="loader">
+    <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+  </div>
+</span>
+<div class="container-fluid" style="background-color: #fff;">
+    <div class="row panel">
+        <div class="col-12">
+            <form [formGroup]="copyExistingForm" (ngSubmit)="copyProgramClicked()">
+                <label class="input-label">{{ this.resourceMessage && this.resourceMessage['SelectaBuywindowlbl'] }}</label>
+                <div ngbDropdown class="d-inline-block calender-input">
+                    <div class="btn drop-down-button" id="dropdownBasic1" ngbDropdownToggle>
+                        <div attr.id="{{selectedBuyWindow && selectedBuyWindow.buyWindowName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(selectedBuyWindow && selectedBuyWindow.buyWindowName)" class="categoryname" >{{ selectedBuyWindow && selectedBuyWindow.buyWindowName }}</div>
+                        <i [ngClass]="(buywindowlist && buywindowlist.length) ? 'selected-image-color' : 'unselected-image-color'" class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                    </div>
+                    <div style="width: 100%" class="drop-down-list" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                      <div *ngFor="let buyWindow of buywindowlist let i=index" class="row dropdown-row" (click)="selectBuyWindow(buyWindow)" ngbDropdownItem>
+                        <div>{{ buyWindow.buyWindowName }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div *ngIf="copyExistingForm.controls['buyWindowName'].invalid && (coypButtonClicked)" class="card-error-text">{{ this.resourceMessage && this.resourceMessage['BuywindowRqd'] }}</div>
+                  <label style="margin-top: 25px;" class="input-label">{{ this.resourceMessage && this.resourceMessage['SelectPgmlbl'] }}</label>
+                  <div [ngStyle]="{'cursor':disableProgramDropDown() ? 'not-allowed' :  'pointer'}"  [attr.disabled]="disableProgramDropDown() ? 'disabled' : null"  ngbDropdown class="d-inline-block calender-input">
+                      <div [ngStyle]="{'cursor':disableProgramDropDown() ? 'not-allowed' :  'pointer'}" class="btn drop-down-button" id="dropdownBasic1" ngbDropdownToggle>
+                          <div attr.id="{{selectedProgramToCopy && selectedProgramToCopy.programName}}" #tooltip1="matTooltip" (click)="tooltip1.toggle()" [matTooltip]="isToolTipExists(selectedProgramToCopy && selectedProgramToCopy.programName)" class="categoryname" >{{ selectedProgramToCopy && selectedProgramToCopy.programName }}</div>
+                          <i [ngClass]="programDetails && programDetails.length ? 'selected-image-color' : 'unselected-image-color'" class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                      </div>
+                      <div [ngStyle]="{'display':disableProgramDropDown() ? 'none' : ''}" style="width: 100%" class="drop-down-list" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                        <div *ngFor="let program of programDetails let i=index" class="row dropdown-row" (click)="selectCategoryToCopy(program)" ngbDropdownItem>
+                          <div>{{program.programName}}</div>
+                        </div>
+                      </div>
+                    </div>  
+                    <div *ngIf="copyExistingForm.controls['programName'].invalid && (coypButtonClicked)" class="card-error-text">{{ this.resourceMessage && this.resourceMessage['ProgramRqd'] }}</div>        
+                <div class="container">
+                    <div class="text-center">
+                        <button [ngClass]="!copyExistingForm.valid ? 'invalid-button' : 'valid-button'" class="button-class savebutton" type="submit">{{ this.resourceMessage && this.resourceMessage['Copypgmlbl'] }}</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    </div>

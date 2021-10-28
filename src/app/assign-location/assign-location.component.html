@@ -1,0 +1,67 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerprogram" style="display: none;" >
+  <div class="loader">
+    <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+  </div>
+</span>
+<div style="margin-top: 20px;transition: none;" *ngIf="getAssignLocations().length">
+  <span  class="component-heading">{{resourceMessage &&
+    resourceMessage['assignLocationlbl']}}</span>
+</div>
+<div *ngIf="getAssignLocations().length" class="row users-row">
+  <div *ngFor="let name of getAssignLocations() let i=index" class="col-12 users-column" [ngClass]="(i === (getAssignLocations().length - 1)) ? 'border-bottom-zero' : ''">
+   <p class="user-name">{{name && name.Name}}</p> 
+  </div>
+</div>
+<div class="row" *ngIf="!isAdminCompleteProgram">
+  <div class="search-title">{{resourceMessage &&
+    resourceMessage['searchlocation']}}</div>
+   <div class="col-12 col-sm-4 col-md-4">
+    <div *ngIf="!appCommon.isMobileCompatibleScreen()" class="calender-input">
+      <i class="fa fa-search search-label-icon" aria-hidden="true"></i>
+      <input class="search-box search-text-desktop input-class-name" [(ngModel)]="searchText" (keyup.enter)="onFieldChange($event)" #txtsearch placeholder="{{resourceMessage &&
+        resourceMessage['searchlocationname'] }}">
+        <button class="fa fa-search search-button" style="margin-top: 5px;" aria-hidden="true" (click)="onFieldChange(searchText)" ></button>
+      </div>
+    <div *ngIf="appCommon.isMobileCompatibleScreen()" class="calender-input">
+    <input class="search-box input-class input-class-name" style="margin: 0;" [(ngModel)]="searchText" (keyup.enter)="onFieldChange($event)" #txtsearch placeholder="{{resourceMessage &&
+      resourceMessage['searchlocationname'] }}">
+    <button class="fa fa-search search-button" aria-hidden="true" (click)="onFieldChange(searchText)" ></button>
+    </div>
+   </div>
+</div>
+<div class="row result-row" *ngIf="this.dataSource && this.dataSource.data && this.dataSource.data.length>0">
+  <div class="col-6 example-margin"style="float: left; font-size: 16px">
+    {{ this.resourceMessage && this.resourceMessage['Resultslbl'] }}
+  </div>
+  <div class="col-6" *ngIf="!isAdminCompleteProgram" style="float: right;padding: 0;">
+   <mat-checkbox style="float: right;" class="example-margin" [checked]="checkSelectAll()" (change)="changeSelectAll($event)">{{ this.resourceMessage && this.resourceMessage['selectalllbl'] }}</mat-checkbox>
+  </div>
+ </div>
+<div class="table-class">
+  <div class="header-class">
+  <div class="header-text">{{ this.resourceMessage && this.resourceMessage['nameLbl'] }}</div>
+  </div>
+  <mat-tree [dataSource]="dataSource" [treeControl]="treeControl">
+    <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle matTreeNodePadding [matTreeNodePaddingIndent]="paddingIndent">
+      <button mat-icon-button disabled></button>
+      <mat-checkbox [disabled]="isAdminCompleteProgram" class="checklist-leaf-node" [checked]="checkSelected(node)"
+        (change)="changeNodeSelection(node)">{{node.Name}}</mat-checkbox>
+    </mat-tree-node>
+  
+    <mat-tree-node *matTreeNodeDef="let node; when: hasChild" matTreeNodePadding [matTreeNodePaddingIndent]="paddingIndent">
+      <button mat-icon-button matTreeNodeToggle
+              [attr.aria-label]="'toggle ' + node.filename">
+        <mat-icon *ngIf="hasChild" class="mat-icon-rtl-mirror">
+          {{treeControl.isExpanded(node) ? 'expand_more' : 'chevron_right'}}
+        </mat-icon>
+      </button>
+      <mat-checkbox [disabled]="isAdminCompleteProgram" [checked]="descendantsAllSelected(node)" [indeterminate]="descendantsPartiallySelected(node)"
+        (change)="todoItemSelectionToggle(node)">{{node.Name}}</mat-checkbox>
+        <div class="selected-count">{{getSelectedNodeCount(node)}}</div>
+    </mat-tree-node>
+  </mat-tree>
+</div>
+<div class="mobile-align"  *ngIf="!isAdminCompleteProgram">
+  <button class="save-button" (click)="saveAssignLocations()">{{ this.resourceMessage && this.resourceMessage['saveuser'] }}</button>
+</div>
+

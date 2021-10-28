@@ -1,0 +1,108 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerProgram" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+
+  <div class="container-fluid">
+    <div class="buywindowname">{{buywindowname}}</div>
+    <mat-accordion class="example-headers-align">
+        <mat-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span [ngStyle]="{'color':(step === 0) ? appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appFontColor ? appCommonFunctions.getTheme().color.appFontColor : '#00000' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appPrimaryTextColor ? appCommonFunctions.getTheme().color.appPrimaryTextColor : '#3a3a3a' }" class="titleclass"><h4 class="popup-heading">{{ checkEditModeDisabled() ? resourceMessage && resourceMessage['ModifyElementlbl'] : resourceMessage && resourceMessage['CreatenewElmBtn']}}</h4></span> 
+          <!-- <span class="material-icons open">
+            <i class="fa fa-caret-down caret-arrow fa-lg" aria-hidden="true"  ></i>
+          </span>
+          <span class="material-icons close">
+            <i class="fa fa-caret-up caret-arrow fa-lg" aria-hidden="true"  ></i>
+          </span> -->
+        </mat-panel-title>                        
+      </mat-expansion-panel-header>
+     
+      <form [formGroup]="createElementForm" (ngSubmit)="createItem()">
+        <div class="popup-input form-class">
+          <label class="input-label">{{ resourceMessage && resourceMessage['Elementlbl'] }}</label>
+          <div id="dropdownexpand" ngbDropdown class="d-inline-block">
+              <div class="btn drop-down-button" id="dropdownBasic1" ngbDropdownToggle>
+                  <input value="{{itemSelection ? itemSelection : ''}}" (input)="filterItemList($event)"  class="categoryname">
+                  <i class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+              </div>
+              <div *ngIf="(createElementForm.controls['itemElement'].invalid && (submitButtonClicked))" class="card-error-text">{{ resourceMessage &&
+                  resourceMessage['programItemReq'] }}</div>
+              <div style="width: 100%" class="drop-down-list"  ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <div  *ngFor="let item of filteredItemList let i=index" (click)="selectElementItem(item)" class="row dropdown-row" ngbDropdownItem>
+                  <div class="col-8">
+                   <span class="itemList-name" >{{item.externalItemID}}</span> <br>
+                   <span class="itemList-long-desc">{{item.shortDescription}}</span> <br>
+                   <span class="itemList-short-desc">{{item.categorydescription}}</span>
+                  </div>
+                  <div class="col-4 dropdown-column">
+                   <p class="item-price-text">{{item.unitPrice | currency}}</p>
+                  </div>
+                  </div>
+              </div>
+            </div>
+      </div>
+      <div>
+        <div class="popup-input">
+            <label class="input-label">{{ resourceMessage && resourceMessage['Pricelbl'] }}</label>
+            <div class="calender-input">
+            <input NumbersOnlyInputDirective formControlName="price" class="input-class input-class-name" value="{{selectedItem && selectedItem.unitPrice && selectedItem.unitPrice.toFixed(2)}}" autocomplete="off" name="fullName" autocomplete="off" [attr.disabled]="!canEditPrice ? 'disabled' : null" />
+                <div *ngIf="(createElementForm.controls['price'].invalid && (submitButtonClicked))" class="card-error-text">{{ resourceMessage &&
+                    resourceMessage['priceReq'] }}</div>
+            </div>
+        </div>
+        <div class="popup-input">
+            <label class="input-label">{{ resourceMessage && resourceMessage['Notelbl'] }}</label>
+            <div class="calender-input">
+            <input formControlName="notes" class="input-class input-class-name" maxlength="1000" autocomplete="off" value="{{selectedItem && selectedItem.notes}}"  name="fullName" autocomplete="off"
+                required="required" />
+            </div>
+        </div>
+        <div style="display: flex;" class="row popup-input">
+            <div *ngIf="((appCommonFunctions.isMobileCompatibleScreen() && !isremoveImage) || !appCommonFunctions.isMobileCompatibleScreen())" class="col-12 col-sm-12 col-md-12">
+                <div class="dropzone dropzone-popup" appDragDrop [isCreateNewProgram]="isCreateNewProgram" (filesDroppedModifyElement)="handleDrop($event)" (modifyProgramFileChange)="modifyProgramFileChange($event)" (showInvalidErrorModifyElement)="showerrormessage($event)">
+                    <div for="fileIdValue" class="text-wrapper text-wrapper-popup">
+                        <div for="fileIdValue" class="centered">
+                            <input type="file" name="fileIdValue" id="fileIdValue" accept="image/gif, image/jpeg, image/png, image/jpg"/>
+                            <label for="fileIdValue">
+                                <img class="pathimage" src="{{assetPath}}images/Path.svg">
+                            </label>
+                            <label class="input-file-image input-file-popup draganddropclass" for="fileIdValue">{{ resourceMessage && resourceMessage['draganddropprogram'] }}</label>
+                            <label class="input-file-image input-file-popup or-text" for="fileIdValue">or</label>
+                            <label class="input-file-image input-file-popup browse-files-text" for="fileIdValue">{{ resourceMessage && resourceMessage['BrowseFileslbl'] }}</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="((appCommonFunctions.isMobileCompatibleScreen() && isremoveImage) || !appCommonFunctions.isMobileCompatibleScreen())" class="col-12 col-sm-12 col-md-12 imgdiv">
+                <div class="imagenew">
+                    <img class="list-image-popup"  src="{{imageNotAvailable}}" id="imageuploadEditElement">
+                </div>                  
+            </div>
+            <div class="row lastdiv">
+                <div class="col-8">
+                    <div id="invalidformt"></div>
+                </div>
+                <div class="col-4 removeclass">
+                    <a class="remove-image" (click)="removeitemImage($event)" [ngClass]="[!isremoveImage ? 'disableClassLink' : '']" >{{ resourceMessage && resourceMessage['RemoveImagelbl'] }}</a>
+                    <!-- <input type="button" value="remove" (click)="removeImage($event)">   -->
+                </div>
+            </div>
+            
+             
+            
+        </div>
+    </div>
+   
+    <div class="container">
+        <div class="text-center">
+            <button [ngClass]="[isLoading ? 'submit': '',!createElementForm.valid ? 'invalid-button' : 'valid-button']" class="button-class savebutton"
+              value= "submit" type="submit">{{ checkEditModeDisabled() ? resourceMessage && resourceMessage['SaveElementBtn'] : resourceMessage && resourceMessage['CreateBuyBtn']}}</button>
+        </div>
+    </div>
+      </form>
+    </mat-expansion-panel>
+    </mat-accordion>
+  </div>

@@ -1,0 +1,32 @@
+.imgclass{
+    height: 96px;
+    width: 100%;
+    object-fit: contain;
+}
+.round-image{
+    border-radius: 70%;	
+    width: 67px;	
+    height: 67px;  
+    object-fit: cover;     
+}
+
+ .mobile-image-class {
+     height: 47px;
+     width: 47px;
+ }
+
+ .image-container {
+    background-color: #ddd;
+    width: 100%;
+ }
+ .nobackground{
+     background-color: #fff !important;
+ }
+// .child {
+//     position: absolute;
+//     top: -9999px;
+//     bottom: -9999px;
+//     left: -9999px;
+//     right: -9999px;
+//     margin: auto;
+// }

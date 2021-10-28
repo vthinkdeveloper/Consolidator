@@ -1,0 +1,17 @@
+<div class="row">
+    <div class="icondiv col-md-3">
+        <img *ngIf="data.type == 'success'" src="{{data.assetpath}}images/success.svg">
+        <img *ngIf="data.type == 'warning'" src="{{data.assetpath}}images/warning.svg">
+        <img *ngIf="data.type == 'error'" src="{{data.assetpath}}images/error.svg">
+    </div> 
+    <div class="messagediv col-md-9">
+        <span  *ngIf="data.name && data.name != ''"> <b>{{data.name}} </b></span> 
+        <!-- <br *ngIf="data.name && data.name != ''"> -->
+        <span>{{data.html}}</span>
+    </div>
+</div>
+<img src="{{data.assetpath}}images/close.svg" (click)="snackBar.dismiss()" class="close close-font pointer-class">
+<!-- <button mat-raised-button (click)="snackBar.dismiss()">Dismiss</button> -->
+<!-- <button type="button" class="close close-font pointer-class" aria-label="Close" (click)="snackBar.dismiss()">
+    <span aria-hidden="true">&times;</span>
+</button> -->

@@ -1,0 +1,267 @@
+<div class="row" *ngIf="!isAdminCompleteProgram">
+    <div class="col-12 col-sm-6 col-md-6">
+      <div class="btndiv">
+          <input type="button" id="create-button" style="background: url(assets/images/createprg.svg) no-repeat 6% 49%;" value="{{ resourceMessage && resourceMessage['CreateNewItembtn'] }}" ng class="btn btn-primary btncreatenewprogram btncreateNewElement" (click)="openCreateWindowTemplate(createElementTemplate)">
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-6">
+      <div class="btndiv copyexisting" *ngIf="iscopiedprogram">
+          <input type="button" id="copy-prgm" style="background: url(assets/images/copy.svg) no-repeat 6% 49%;" value="{{resourceMessage && resourceMessage['Copyfromexistingbtn']}}" class="btn btn-primary btncreatenewprogram copyprg copyitem btncreateNewElement" (click)="openCloneWindowTemplate(cloneElementTemplate)">
+      </div>
+  </div>
+    </div>
+    <div *ngIf="programItemList && programItemList.length && !appCommonFunctions.isMobileCompatibleScreen()" class="element-list" [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? 'margin-zero-parent' : ''">
+        <div class="row item-heading-row" [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? 'margin-zero' : ''" style="margin-bottom: 10px">
+            <div class="col-4 col-sm-3 col-md-3" [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? '' : 'center-align'">
+                <p class="list-heading-mobile imglbl" [ngStyle]="{'padding-left': (isAdminCompleteProgram || isAdminEditScreen) ? isAdminCompleteProgram ? '25%' : '50%' : '' }" >{{ resourceMessage && resourceMessage['Imagelbl'] }}</p>
+                </div>
+                <div class="col-5 col-sm-5 col-md-5" [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? '' : 'center-align'">
+                    <p class="list-heading-mobile">{{ resourceMessage && resourceMessage['Elementnamelbl'] }}</p>
+                </div>
+                <div class="col-3 col-sm-2 col-md-2" [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? '' : 'center-align'">
+                    <p class="list-heading-mobile">{{ resourceMessage && resourceMessage['Pricelbl'] }}</p>
+                </div>
+                <div class="d-none d-sm-block col-sm-2 col-md-2" [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? '' : 'center-align'">
+                    <p class="list-heading-mobile">{{ resourceMessage && resourceMessage['Notelbl'] }}</p>
+                </div>
+        </div>
+        <div *ngFor="let item of programItemList let i=index" class="row item-list-row" [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? 'margin-zero' : ''"  style="margin-bottom: 1%;">
+            <div class="col-4 col-sm-3 col-md-3">
+                <div style="height: 100%;width: 100%; margin-bottom: 5%;" class="row">
+                    <div class="col-4 col-sm-4 col-md-4" *ngIf="!isAdminCompleteProgram" style="padding-right: 0;padding-left: 10%;align-self: center;">                                
+                        <img src="{{deletepath}}" id="deleteimg-{{i}}" title="{{ resourceMessage && resourceMessage['deletethisitem'] }}" (click)="openDeletePopup(item)" style="cursor: pointer;" class="deleteimg close close-font pointer-class">
+                        <img src="{{editpath}}"  (click)="editElementItem(item)" id="editimg-{{i}}" style="cursor: pointer;" class="close close-font pointer-class" title="{{ resourceMessage && resourceMessage['editthisitem'] }}">
+                    </div>
+
+                    <div *ngIf="isAdminCompleteProgram"  class="col-2"></div>
+
+                    <div class="col-8"  style="padding-right: 0;padding-left: 0;align-self: center;">
+                        <app-image-card [type]="'programElement'" [thumbnailImagePath]="item.thumbnailImagePath" [isround]="false"></app-image-card>
+                    </div>
+                    <div *ngIf="isAdminCompleteProgram"  class="col-2"></div>
+                </div>
+                </div>
+                <div class="col-5 col-sm-5 col-md-5 list-desc">
+                    <div [ngClass]="(!isAdminCompleteProgram && !isAdminEditScreen) ? 'padding-left-class' : ''">
+                        <span class="itemList-name" >{{item.externalItemID}}</span> <br>
+                        <span class="itemList-long-desc">{{item.shortDescription}}</span> <br>
+                        <span class="itemList-short-desc">{{item.categorydescription}}</span>
+                    </div>
+                </div>
+                <div style="text-align: center;align-self: center;" class="col-3 col-sm-2 col-md-2">
+                    <p [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? 'text-align-left' : ''" class="list-column-text">{{item && item.unitPrice | currency}}</p>
+                </div>
+                <div style="text-align: center;align-self: center;" class="d-none d-sm-block col-sm-2 col-md-2">
+                    <p [ngClass]="(isAdminCompleteProgram || isAdminEditScreen) ? 'text-align-left' : ''" class="list-column-text">{{item && item.notes}}</p>
+                </div>
+        </div>
+        <app-confirm-popup [popupObject]="popupDataObject" (okbuttonClicked)="deleteElementItem()" (cancelButtonClicked)="cancelDelete()"></app-confirm-popup>
+    </div>
+    <div *ngIf="programItemList && programItemList.length && appCommonFunctions.isMobileCompatibleScreen()" class="element-list">
+        <div class="row item-heading-row-mobile">
+            <div class="col-4 col-sm-3 col-md-3">
+                <p class="list-heading imglbl">{{ resourceMessage && resourceMessage['Imagelbl'] }}</p>
+                </div>
+                <div class="col-5 col-sm-5 col-md-5">
+                    <p class="list-heading">{{ resourceMessage && resourceMessage['Elementnamelbl'] }}</p>
+                </div>
+                <div class="col-3 col-sm-2 col-md-2">
+                    <p class="list-heading">{{ resourceMessage && resourceMessage['Pricelbl'] }}</p>
+                </div>
+                <div class="d-none d-sm-block col-sm-2 col-md-2">
+                    <p class="list-heading">{{ resourceMessage && resourceMessage['Notelbl'] }}</p>
+                </div>
+        </div>
+        <div *ngFor="let item of programItemList let i=index" class="row item-list-row mobile-padding">
+            <div class="col-4 col-sm-3 col-md-3" style="padding-right: 0px;">
+                <div style="height: 100%;width: 100%; margin-bottom: 5%;" class="row">
+                    <div *ngIf="!isAdminCompleteProgram" class="col-6 col-sm-4 col-md-4" style="padding-right: 0;padding-left: 10%;align-self: center;">                                
+                        <img src="{{deletepath}}" id="deleteimg-{{i}}" title="{{ resourceMessage && resourceMessage['deletethisitem'] }}" (click)="openDeletePopup(item)" style="cursor: pointer;" class="deleteimg close close-font pointer-class">
+                        <img src="{{editpath}}"  (click)="editElementItem(item)" id="editimg-{{i}}" style="cursor: pointer;" class="close close-font pointer-class" title="{{ resourceMessage && resourceMessage['editthisitem'] }}">
+                    </div>
+                    <div class="modify-image" [ngStyle]="{'padding-left':(isAdminCompleteProgram) ? '12px' :  '0px'}"  [ngClass]="(isAdminCompleteProgram) ? 'col-12' : 'col-6'">
+                        <app-image-card [type]="'programElement'" [thumbnailImagePath]="item.thumbnailImagePath" [isround]="false"></app-image-card>
+                    </div>
+                </div>
+                </div>
+                <div class="col-5 col-sm-5 col-md-5 list-desc">
+                    <div class="padding-left-class" style="padding-left: 20%;">
+                        <div class="itemList-name-mobile" >{{item.externalItemID}}</div>
+                        <div class="itemList-long-desc-mobile">{{item.shortDescription}}</div> 
+                        <div class="itemList-long-desc-mobile">{{item.categorydescription}}</div>
+                    </div>
+                </div>
+                <div style="text-align: center;align-self: center;" class="col-3 col-sm-2 col-md-2">
+                    <p class="list-column-text-cost">{{item && item.unitPrice | currency}}</p>
+                </div>
+                <div style="text-align: center;align-self: center;" class="d-none d-sm-block col-sm-2 col-md-2">
+                    <p class="list-column-text-cost">{{item && item.notes}}</p>
+                </div>
+        </div>
+        <app-confirm-popup [popupObject]="popupDataObject" (okbuttonClicked)="deleteElementItem()" (cancelButtonClicked)="cancelDelete()"></app-confirm-popup>
+    </div>
+
+<ng-template #createElementTemplate>
+    <div>
+        <img src="{{assetPath}}images/close.svg" (click)="closeModel()" class="close close-font pointer-class">
+<!-- 
+        <button type="button" class="close close-font pointer-class" aria-label="Close" (click)="closeModel()">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+    </div>
+    <div class="modal-body create-item-modal">
+        <form [formGroup]="createElementForm" (ngSubmit)="createItem()">
+        <h4 class="popup-heading">{{ checkEditModeDisabled() ? resourceMessage && resourceMessage['ModifyElementlbl'] : resourceMessage && resourceMessage['CreatenewElmBtn']}}</h4>
+        <div class="popup-input">
+            <label class="input-label">{{ resourceMessage && resourceMessage['Elementlbl'] }}</label>
+            <div id="dropdownexpand" ngbDropdown class="d-inline-block">
+                <div class="btn drop-down-button" id="dropdownBasic1" ngbDropdownToggle>
+                    <input value="{{itemSelection ? itemSelection : ''}}" (input)="filterItemList($event)"  class="categoryname">
+                    <i class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="(createElementForm.controls['itemElement'].invalid && (submitButtonClicked))" class="card-error-text">{{ resourceMessage &&
+                    resourceMessage['programItemReq'] }}</div>
+                <div style="width: 100%" class="drop-down-list"  ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                    <div  *ngFor="let item of filteredItemList let i=index" (click)="selectElementItem(item)" class="row dropdown-row" ngbDropdownItem>
+                    <div class="col-8">
+                     <span class="itemList-name" >{{item.externalItemID}}</span> <br>
+                     <span class="itemList-long-desc">{{item.shortDescription}}</span> <br>
+                     <span class="itemList-short-desc">{{item.categorydescription}}</span>
+                    </div>
+                    <div class="col-4 dropdown-column">
+                     <p class="item-price-text">{{item.unitPrice | currency}}</p>
+                    </div>
+                    </div>
+                </div>
+              </div>
+        </div>
+        <div>
+            <div class="popup-input">
+                <label class="input-label">{{ resourceMessage && resourceMessage['Pricelbl'] }}</label>
+                <div class="calender-input">
+                <input NumbersOnlyInputDirective formControlName="price" class="input-class input-class-name" value="{{selectedItem && selectedItem.unitPrice.toFixed(2)}}" autocomplete="off" name="fullName" autocomplete="off" [attr.disabled]="!canEditPrice ? 'disabled' : null" />
+                    <div *ngIf="(createElementForm.controls['price'].invalid && (submitButtonClicked))" class="card-error-text">{{ resourceMessage &&
+                        resourceMessage['priceReq'] }}</div>
+                </div>
+            </div>
+            <div class="popup-input">
+                <label class="input-label">{{ resourceMessage && resourceMessage['Notelbl'] }}</label>
+                <div class="calender-input">
+                <input formControlName="notes" class="input-class input-class-name" maxlength="1000" autocomplete="off" value="{{selectedItem && selectedItem.notes}}"  name="fullName" autocomplete="off"
+                    required="required" />
+                </div>
+            </div>
+            <div style="display: flex;" class="row popup-input">
+                <div *ngIf="((appCommonFunctions.isMobileCompatibleScreen() && !isremoveImage) || !appCommonFunctions.isMobileCompatibleScreen())" class="col-12 col-sm-8 col-md-8">
+                    <div class="dropzone dropzone-popup" appDragDrop [isCreateNewProgram]="isCreateNewProgram" (filesDroppedModifyElement)="handleDrop($event)" (modifyProgramFileChange)="modifyProgramFileChange($event)" (showInvalidErrorModifyElement)="showerrormessage($event)">
+                        <div for="file" class="text-wrapper text-wrapper-popup">
+                            <div for="file" class="centered">
+                                <input type="file" name="fileId" id="fileId" accept="image/gif, image/jpeg, image/png, image/jpg"/>
+                                <label for="file">
+                                    <img class="pathimage" src="{{assetPath}}images/Path.svg">
+                                </label>
+                                <label class="input-file-image input-file-popup draganddropclass" for="file">{{ resourceMessage && resourceMessage['DragandDrop'] }}</label>
+                                <label class="input-file-image input-file-popup or-text" for="file">or</label>
+                                <label class="input-file-image input-file-popup browse-files-text" for="file">{{ resourceMessage && resourceMessage['BrowseFileslbl'] }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="((appCommonFunctions.isMobileCompatibleScreen() && isremoveImage) || !appCommonFunctions.isMobileCompatibleScreen())" class="col-12 col-sm-4 col-md-4 imgdiv">
+                    <div class="imagenew">
+                        <img class="list-image-popup"  src="{{imageNotAvailable}}" id="imageuploadEditElement">
+                    </div>                  
+                </div>
+                <div class="row lastdiv">
+                    <div class="col-8">
+                        <div id="invalidformt"></div>
+                    </div>
+                    <div class="col-4 removeclass">
+                        <a class="remove-image" (click)="removeitemImage($event)" [ngClass]="[!isremoveImage ? 'disableClassLink' : '']" >{{ resourceMessage && resourceMessage['RemoveImagelbl'] }}</a>
+                        <!-- <input type="button" value="remove" (click)="removeImage($event)">   -->
+                    </div>
+                </div>
+                
+                 
+                
+            </div>
+        </div>
+       
+        <div class="container">
+            <div class="text-center">
+                <button [ngClass]="[isLoading ? 'submit': '',!createElementForm.valid ? 'invalid-button' : 'valid-button']" class="button-class savebutton"
+                  value= "submit" type="submit">{{ checkEditModeDisabled() ? resourceMessage && resourceMessage['SaveElementBtn'] : resourceMessage && resourceMessage['CreatenewItemBtnPopup']}}</button>
+            </div>
+        </div>
+      </form>
+    </div>
+</ng-template>
+
+
+<ng-template #cloneElementTemplate>
+    <div>
+        <img src="{{assetPath}}images/close.svg" (click)="closeModel()" class="close close-font pointer-class">
+<!-- 
+        <button type="button" class="close close-font pointer-class" aria-label="Close" (click)="closeModel()">
+            <span aria-hidden="true">&times;</span>
+        </button> -->
+        
+    </div>
+    <div class="modal-body create-item-modal">
+        <h4 class="popup-heading">{{resourceMessage && resourceMessage['Copyfromexistinglbl']}}</h4>
+        <div *ngIf="programItemListFromCopied && programItemListFromCopied.length" class="element-list popup-item-list">
+            <div class="itemtable">
+                <div class="row item-heading-row popup-item-header">
+                    <div class="col-3">
+                        <p class="list-heading imglbl imgpopuuplbl">{{ resourceMessage && resourceMessage['Imagelbl'] }}</p>
+                        </div>
+                        <div class="col-5">
+                            <p class="list-heading itemlbl">{{ resourceMessage && resourceMessage['Elementnamelbl'] }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="list-heading">{{ resourceMessage && resourceMessage['Pricelbl'] }}</p>
+                        </div>
+                        <div class="col-2">
+                            <p class="list-heading">{{ resourceMessage && resourceMessage['Notelbl'] }}</p>
+                        </div>
+                </div>
+                <div *ngFor="let item of programItemListFromCopied let i=index" class="row item-list-row popup-item-list">
+                    <div class="col-3">
+                        <div style="height: 100%;width: 100%; margin-bottom: 5%; align-items: center;" class="row">
+                            <div class="col-md-3 checkboxclass">                                
+                                <input type="checkbox" name="checkitem" #checkboxitem value="{{item.programItemId}}" (click)="checkitem(checkboxitem)" >    
+                            </div>
+                            <div class="col-8" style="padding-right: 0;padding-left: 0; padding-top: 6%;">
+                                <app-image-card [type]="'programElement'" [thumbnailImagePath]="item.thumbnailImagePath" [isround]="false"></app-image-card>
+                            </div>
+                        </div>
+                        </div>
+                        <div class="col-5 list-desc">
+                            <div>
+                                <span class="itemList-name" >{{item.externalItemID}}</span> <br>
+                                <span class="itemList-long-desc">{{item.shortDescription}}</span> <br>
+                                <span class="itemList-short-desc">{{item.categorydescription}}</span>
+                            </div>
+                        </div>
+                        <div style="text-align: center;align-self: center;" class="col-2">
+                            <p class="list-column-text">{{item && item.unitPrice | currency}}</p>
+                        </div>
+                        <div style="text-align: center;align-self: center;" class="col-2">
+                        <div class="list-column-text" attr.id="{{item.externalItemID}}" [matTooltipClass]="'my-tooltip'" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(item)" class="truncate-itemnote-list item-note">{{item && item.notes}}</div>
+                        </div>
+                </div>
+            </div>
+            <div class="selectalldiv">
+                <input type="checkbox" #selectall (change)="checkAll(selectall)" name="chk[]"> <span class="selectalltext">{{resourceMessage && resourceMessage['selectalllbl']}}</span>
+            </div>
+            
+            <div class="container">
+                <div class="text-center">
+                    <button  class="button-class savebutton" [ngClass]="[enablecreatebutton ? 'valid-button' : 'invalid-button']"
+                      value= "submit" type="submit" (click)="create()" >{{resourceMessage && resourceMessage['CreateBtn']}}</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</ng-template>

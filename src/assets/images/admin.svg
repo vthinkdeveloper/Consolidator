@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="19px" height="21px" viewBox="0 0 19 21" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 37</title>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-27" stroke="#66696C">
+            <g id="Group-21" stroke-width="1.5">
+                <ellipse id="Oval" cx="7.71428571" cy="3.75" rx="3.10714286" ry="3"></ellipse>
+                <path d="M9.17857143,8.25 C10.6973545,8.25 12.0723545,8.86560847 13.0676587,9.8609127 C14.062963,10.8562169 14.6785714,12.2312169 14.6785714,13.75 L14.6785714,13.75 L14.6785714,19 L1,19.25 L0.75,13.75 C0.75,12.2312169 1.36560847,10.8562169 2.3609127,9.8609127 C3.35621694,8.86560847 4.73121694,8.25 6.25,8.25 L6.25,8.25 Z" id="Rectangle"></path>
+            </g>
+            <path d="M10.2803716,13.75 C12.3146048,11.8376793 13.6003191,10.881519 14.1375145,10.881519 C14.6747098,10.881519 15.9604241,11.8376793 17.9946573,13.75 L14.1375145,20 L10.2803716,13.75 Z" id="Path-13" stroke-width="1.5" fill="#FFFFFF" stroke-linejoin="round"></path>
+            <line x1="14.1375145" y1="12.938584" x2="14.1375145" y2="15.6527823" id="Path-14" stroke-linecap="round" stroke-linejoin="round"></line>
+            <line x1="14.1375145" y1="12.8998097" x2="14.1375145" y2="15.6915566" id="Path-14" stroke-linecap="round" stroke-linejoin="round" transform="translate(14.137514, 14.295683) rotate(-90.000000) translate(-14.137514, -14.295683) "></line>
+        </g>
+    </g>
+</svg>

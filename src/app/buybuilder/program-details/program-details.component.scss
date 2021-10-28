@@ -1,0 +1,89 @@
+@import '../../../variable.scss';
+
+.title-row {
+    width: 20%;
+}
+
+.buy-window-title {
+  color: var(--app-font-color);
+  font-family:  $font-family-Semibold;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-bottom: 0px;
+}
+
+.buy-window-title-details{
+  color: var(--app-font-color);
+  font-family: $font-family-Semibold;
+  font-size: 16px;
+  letter-spacing: 0;
+  line-height: 20px;
+  margin-bottom: 0px;
+  padding-top: 10%;
+  padding-bottom: 7%;
+}
+
+.program-title {
+  font-family: $font-family-medium;
+  color: #8A8A8A;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+
+.program-detail {
+  color: var(--app-font-color);
+  font-family: $font-family-medium;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 16px;
+}
+
+.colon-class {
+  padding: 0;
+  color: #8A8A8A;
+  font-family: $font-family-medium;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 19px;
+}
+
+.program-item-image {
+  height: 115px;
+  width: 95px;
+  object-fit: none;
+  margin-left: 24px;
+}
+
+.view-class{
+  margin-right: 5%;
+}
+.linkclass{
+  color: #1E1E1E;
+  font-family: $font-family-medium;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 16px;
+  cursor: pointer;
+}
+
+.programdetails-div{
+  padding-left: 10%;
+  border-bottom: 1px solid #CDCDCD;
+  
+}
+.programdetails-div:last-child {
+  border: none;
+}
+.buywindowdetails{
+  padding-left: 10%;
+  width: auto;
+}
+
+.details{
+  padding-bottom: 2%;
+}
+.modify{
+  padding-right: 10px;
+}

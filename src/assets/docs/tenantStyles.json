@@ -1,0 +1,42 @@
+[
+	{
+		"tenantId": "default",
+		"color": {
+			"appBackgroundColor": "#006ef5",
+			"appSecondaryBackgroundColor": "#f8f8f8",
+           		 "appSelectionBackgroundColor": "#f3f8ff",
+			"appPrimaryTextColor": "#3a3a3a",
+			"appDescriptionTextColor": "#a59e9e",
+			"appFontColor": "#000",
+			"buttonDisableColor":"#999595",
+			"errorTextColor": "#ff0000",	
+			"headerBackColor": "#FFF",	
+			"headerFrontColor": "#000"
+			"footerBackColor": "#000",	
+			"footerFrontColor": "#FFF"
+		},
+		"font": {
+			"appTextDefaultFont" : "Source Sans Pro"
+		}
+	},
+{
+		"tenantId": "campariamerica",
+		"color": {
+			"appBackgroundColor": "#006ef5",
+			"appSecondaryBackgroundColor": "#f8f8f8",
+           		 "appSelectionBackgroundColor": "#f3f8ff",
+			"appPrimaryTextColor": "#3a3a3a",
+			"appDescriptionTextColor": "#a59e9e",
+			"appFontColor": "#000",
+			"buttonDisableColor":"#999595",
+			"errorTextColor": "#ff0000",
+			"headerBackColor": "rgb(0, 46, 96)",
+			"headerFrontColor": "#fff"
+			"footerBackColor": "#000",	
+			"footerFrontColor": "#FFF"
+		},
+		"font": {
+			"appTextDefaultFont" : "Source Sans Pro"
+		}
+	}
+]

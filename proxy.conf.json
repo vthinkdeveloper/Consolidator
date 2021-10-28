@@ -1,0 +1,11 @@
+{
+    "/api/consolidator/v1/*" : {
+      "target": "https://api-i.qa.brandmuscle.net/",
+      "secure": false,
+      "changeOrigin": true,
+      "logLevel": "debug"
+    },
+    "https://formio.app-i.dev.brandmuscle.net/*": {
+      "secure": false
+    }
+}

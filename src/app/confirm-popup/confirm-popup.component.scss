@@ -1,0 +1,75 @@
+@import '../../variable.scss';
+.close-font {
+    float: right;
+    color: #979797;
+    font-size: 3rem;
+    border: none;
+    background-color: #FFFFFF;
+    font-weight: 100;
+    margin-top: 20px;
+    margin-right: 20px;
+  }
+
+  .popup-confirm {
+    min-height: 45px;
+    font-family: $font-family-Semibold;
+    font-size: 16px;
+    text-align: center;
+    color: #222222;
+    border-radius: 4px;
+    box-sizing: border-box;
+    cursor: pointer;
+    border: 1px solid #006AFE;
+    background-color: var(--app-selection-background-color);
+    width: 150px;
+  }
+
+  .pop-up-text {
+    margin: 10px;
+    margin-top: 12px;
+  }
+
+  .popup-cancel {
+    min-height: 45px;
+    // border: 1px solid #979797;
+    // box-shadow: 0 2px 23px 0 rgba(0,0,0,0.05);
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-right: 30px;
+    font-family: $font-family-Semibold;
+    font-size: 16px;
+    text-align: center;
+    color: #222222;
+    cursor: pointer;
+    background-color: var(--app-selection-background-color);
+    width: 150px;
+  }
+
+  .popup-cancel, .popup-confirm {
+    display: inline-block;
+   }
+
+   .popup-text-name {
+    font-family: $font-family-Semibold;
+   }
+
+  .pop-uptext {
+    margin-top: 20px;
+    text-align: center;
+    font-family: $font-family-regular;
+    font-size: 22px;
+    color: var(--app-font-color);
+    line-height: 30px;
+    padding-left: 7%;
+    padding-right: 7%;
+  }
+
+  .popup-buttons {
+    text-align: center;
+    display: flex;
+    padding-top: 5%;
+    align-self: center;
+    padding-bottom: 10%;
+  }
+
+  

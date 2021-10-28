@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="21px" height="23px" viewBox="0 0 21 23" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Group 25</title>
+    <g id="Icons" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group-25" stroke="#006EF5" stroke-width="1.5">
+            <g id="Group-24" transform="translate(1.176471, 0.000000)">
+                <rect id="Rectangle" x="1.1454523" y="4.25" width="10.2844783" height="4.75" rx="1"></rect>
+                <rect id="Rectangle" x="2.80635195" y="0.75" width="2.45452346" height="2.25" rx="1"></rect>
+                <rect id="Rectangle" x="7.2354177" y="0.75" width="2.45452346" height="2.25" rx="1"></rect>
+            </g>
+            <g id="Group-24" transform="translate(7.820069, 6.000000)">
+                <rect id="Rectangle" x="1.1454523" y="4.25" width="10.2844783" height="4.75" rx="1"></rect>
+                <rect id="Rectangle" x="7.2354177" y="0.75" width="2.45452346" height="2.25" rx="1"></rect>
+            </g>
+            <g id="Group-24" transform="translate(9.285467, 17.500000) scale(-1, 1) translate(-9.285467, -17.500000) translate(0.785467, 12.000000)">
+                <rect id="Rectangle" x="0.749999842" y="4.25" width="15.1089965" height="6" rx="1"></rect>
+                <rect id="Rectangle" x="11.6644834" y="0.75" width="2.45452346" height="2.25" rx="1"></rect>
+            </g>
+        </g>
+    </g>
+</svg>

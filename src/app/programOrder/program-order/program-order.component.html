@@ -1,0 +1,311 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerOrder" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+
+    <div class="container-fluid">
+        <div class="filter-heading-class">Search Filters</div>
+        <!-- <div class="filterlbl">{{ resourceMessage && resourceMessage['SearchFilterlbl'] }}</div> -->
+        <div class="row filterarea" [ngClass]="selectedProgram == undefined ? 'setminheight':''">
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 ddlclass">
+                    <div class="filterlblsection">{{resourceMessage && resourceMessage['Pgmlbl']}}</div>
+                    <div class="col-md-12 filtersection" [ngClass]="isProgramOpen ? 'openedclass' : '' ">  
+                        <div id="dropdownexpand" #drop1="ngbDropdown"   (openChange)="checkDropDown($event,drop1)" ngbDropdown class="d-inline-block">
+                            <div class="btn drop-down-button" id="dropdownBasic1" ngbDropdownToggle>
+                                <span class="categoryname" style="opacity: 0.37;" *ngIf="selectedProgram == undefined" >{{ resourceMessage && resourceMessage['SelectProgramddl'] }}</span>
+                                <div style="opacity: 1;color: #000;" attr.id="{{selectedProgram.programName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(selectedProgram.programName)" class="programnametruncate truncate-programname" *ngIf="selectedProgram != undefined" >{{ selectedProgram && selectedProgram.programName }}</div>
+                                <i *ngIf="!isProgramOpen"  class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                                <i *ngIf="isProgramOpen" class="fa fa-caret-up calender-input-img" aria-hidden="true"></i>
+                            </div>
+                            <div style="width: 100%" class="ddldropdown" ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                                <div *ngFor="let program of programDetails let i=index" [ngClass]="selectedProgram != undefined && selectedProgram.programName == program.programName ? 'filter-button-background-color' : ''" (click)="selectProgram(program)" class="row dropdown-row" ngbDropdownItem>
+                                    <div class="col-12 program-item-div">
+                                        <span attr.id="{{program.programID}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExistsForDropdownItem(program)" class="programnameitemtruncate truncate-programname-list itemList-name" >{{program.programName}}</span>
+                                         <br>
+                                    </div>                 
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+                <div class="col-12 col-sm-12 col-md-12 col-lg-4 ddlclass">
+                    <div class="filterlblsection">{{resourceMessage && resourceMessage['Userlbl']}}</div>
+                    <div class="col-md-12 filtersection" [ngClass]="isUserOpen ? 'openedclass' : '' ">
+                        <div id="dropdownexpand" [ngClass]="userDetails.length == 0 ? 'disabledclass': '' " (openChange)="checkuserDropdown($event,drop1)" ngbDropdown class="d-inline-block">
+                            <div class="btn drop-down-button" id="dropdownBasic2" ngbDropdownToggle>
+                                <span class="categoryname" style="opacity: 0.37;" *ngIf="!selectedUser" [ngClass]="userDetails.length == 0 ? 'disabledclass': '' " >{{resourceMessage && resourceMessage['SelectUserddl']}}</span>
+                                <span class="categoryname" style="opacity: 1;" *ngIf="selectedUser" >{{selectedUser.fullName}}</span>
+                                <i *ngIf="!isUserOpen"  class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                                <i *ngIf="isUserOpen" class="fa fa-caret-up calender-input-img" aria-hidden="true"></i>
+                            </div>
+                            <div style="width: 100%" class="ddldropdown"  ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                                <div *ngFor="let user of userDetails let i=index" [ngClass]="selectedUser.fullName == user.fullName ? 'filter-button-background-color' : ''" (click)="selectUser(user)" class="row dropdown-row" ngbDropdownItem>
+                                    <div class="col-12 userdetails">
+                                    <span class="itemList-name">{{user.fullName}}</span><br>
+                                    <span class="itemList-username">{{user.userName}}</span>
+                                     <br>
+                                    </div>                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 col-sm-12 col-md-12  col-lg-4 ddlclass">
+                    <div class="filterlblsection">{{resourceMessage && resourceMessage['Marketlbl']}}</div>
+                    <div class="col-md-12 filtersection" [ngClass]="isMarketOpen ? 'openedclass' : '' ">
+                        <div id="dropdownexpand" [ngClass]="marketDetails.length == 0 ? 'disabledclass': '' "  (openChange)="checkMarketDropdown($event,drop1)" ngbDropdown class="d-inline-block">
+                            <div class="btn drop-down-button" id="dropdownBasic3" ngbDropdownToggle>
+                                <span class="categoryname" style="opacity: 0.37;" *ngIf="!selectedMarket" [ngClass]="marketDetails.length == 0 ? 'disabledclass': '' " >{{ resourceMessage && resourceMessage['SelectMarketddl'] }}</span>
+                                <span class="categoryname" style="opacity: 1;" *ngIf="selectedMarket" >{{ selectedMarket.clientId }}</span>
+                                <i *ngIf="!isMarketOpen"  class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                                <i *ngIf="isMarketOpen" class="fa fa-caret-up calender-input-img" aria-hidden="true"></i>
+                            </div>
+                            <div style="width: 100%" class="ddldropdown"  ngbDropdownMenu aria-labelledby="dropdownBasic2">
+                                <div *ngFor="let market of marketDetails let i=index" [ngClass]="selectedMarket.clientId == market.clientId ? 'filter-button-background-color' : ''" (click)="selectMarket(market)"  class="row dropdown-row" ngbDropdownItem>
+                                    <div class="col-12">
+                                    <span class="itemList-name" >{{market.clientId}}</span>
+                                     <br>
+                                    </div>                
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12" >
+                    <div *ngIf="showAdditionalRow" class="filter-class ddlclass" (click)="showAndHideAdditionalFilter()" >
+                        <div  style="display: inline-block;cursor: pointer;" class="filter-title">Additional Filters</div>
+                        <i *ngIf="!showAdditionalFilter" style="display: inline-block;margin-top: 20px;" class="fa fa-lg fa-caret-down dropdown-arrow-image" aria-hidden="true"></i>
+                        <i *ngIf="showAdditionalFilter" style="display: inline-block;margin-top: 20px;"  class="fa fa-lg fa-caret-up dropdown-arrow-image" aria-hidden="true"></i> 
+                      </div>
+                      <div [ngStyle]="{'display':(showAdditionalFilter) ? '' :  'none'}">
+                          <formio #form (change)="onChange($event)" [submission]="submission" [form]="formDefinition"></formio>
+                          <!-- <formio #form [refresh]="refreshForm" [submission]="submission" [form]="formDefinition"></formio> -->
+                      </div>  
+                </div>
+                 
+        </div>
+  
+       
+
+        <div class="row pgmdetails pgmtopsection" *ngIf="selectedProgram != undefined">
+            <div class="pgmdetailslbl">{{ resourceMessage && resourceMessage['ProgramDetailsLbl'] }}</div>
+            <div class="col-md-12 pgm">
+                <div class="row pgmdetailsdiv">
+                    <div class="col-4 col-sm-4 col-md-1 imagediv">
+                        <app-image-card [type]="'program'"  [thumbnailImagePath]="selectedProgram.thumbnailImagePath"></app-image-card>
+                    </div>
+                    <div class="col-7 col-sm-8 col-md-10 pgmrightdetails">
+                        <div class="row">
+                            <div class="col-md-12 pgmdateclass">
+                                <div class="programname">{{selectedProgram.programName}}</div>
+                                <div class="dateclass"><span class="orderperiod">{{ resourceMessage && resourceMessage['OrderPeriodlbl'] }}</span> {{selectedProgram.startDate | date:'MM/dd/YYYY'}} - {{selectedProgram.endDate | date:'MM/dd/YYYY'}} </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="col-md-10" [innerHTML]="selectedProgram.programDescription"></div>
+                            </div>
+                        </div>   
+                    </div>                   
+                </div>
+            </div>
+        </div>
+        <div class="row pgmdetails items" *ngIf="(dataSource && !appCommonFunctions.isMobileCompatibleScreen())">
+            <div class="col-md-12  itemdetails">
+                <div class="pgmdetailslbl itemnamelbl">{{ resourceMessage && resourceMessage['ItemListlbl'] }} {{selectedProgram.programName}} </div>           
+                <div class="calender-input">
+                    <i p-icon class="material-icons search-icon">search</i>
+                    <input class="search-box input-class input-class-name" #txtsearch placeholder="{{resourceMessage && resourceMessage['searchPlaceholderProgramOrder']}}" (keyup.enter)="search(txtsearch.value)">
+                    <button class="fa fa-search search-button" aria-hidden="true" (click)="search(txtsearch.value)" ></button>
+                </div>
+                <div class="example-container">
+                    <mat-table #table [dataSource]="dataSource" *ngIf="this.dataSource.data.length" matSort>
+                
+                        <ng-container matColumnDef="image">
+                            <mat-header-cell *matHeaderCellDef  >{{ resourceMessage && resourceMessage['Imagelbl'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                <!-- <span class="published" *ngIf="element.statusName.toLowerCase() == 'published'"> 
+                                    {{ resourceMessage && resourceMessage['Publishedlbl'] }}
+                                 </span> -->
+                                 <!-- <span class="recent" *ngIf="element.recentBuy" >
+                                     <img  class="new" src="{{assetPath}}images/recent.svg" alt="new">
+                                </span> -->
+                                <app-image-card [type]="'programElement'" [thumbnailImagePath]="element.thumbnailImagePath" [isround]="true"></app-image-card>
+                             </mat-cell>
+                        </ng-container>
+            
+                       
+                        <ng-container matColumnDef="itemName">
+                            <mat-header-cell *matHeaderCellDef  > 
+                                <img mat-sort-header (click)="sortbyname()"   class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                                 {{ resourceMessage && resourceMessage['ItemName'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                <!-- <span class="published" *ngIf="element.statusName.toLowerCase() == 'published'"> 
+                                    {{ resourceMessage && resourceMessage['Publishedlbl'] }}
+                                 </span> -->
+                                 <!-- <span class="recent" *ngIf="element.recentBuy" >
+                                     <img  class="new" src="{{assetPath}}images/recent.svg" alt="new">
+                                </span> -->
+                                <div attr.id="{{element.itemName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(element.itemName)" class="itemname">{{element.itemName}} </div>
+                                <div attr.id="{{element.shortDescription}}" #tooltipshort="matTooltip" (click)="tooltipshort.toggle()" [matTooltip]="isToolTipExists(element.shortDescription)" class="shortdescription">{{element.shortDescription}}</div>
+                             </mat-cell>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="unitPrice">
+                            <mat-header-cell *matHeaderCellDef  > 
+                                <img mat-sort-header  (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                                 {{ resourceMessage && resourceMessage['Pricelbl'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                <!-- <span class="published" *ngIf="element.statusName.toLowerCase() == 'published'"> 
+                                    {{ resourceMessage && resourceMessage['Publishedlbl'] }}
+                                 </span> -->
+                                 <!-- <span class="recent" *ngIf="element.recentBuy" >
+                                     <img  class="new" src="{{assetPath}}images/recent.svg" alt="new">
+                                </span> -->
+                                {{element.unitPrice | currency}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="quantity">
+                            <mat-header-cell *matHeaderCellDef   > 
+                                <img mat-sort-header (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                                 {{ resourceMessage && resourceMessage['OrderedQtyLbl'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                <!-- <span class="published" *ngIf="element.statusName.toLowerCase() == 'published'"> 
+                                    {{ resourceMessage && resourceMessage['Publishedlbl'] }}
+                                 </span> -->
+                                 <!-- <span class="recent" *ngIf="element.recentBuy" >
+                                     <img  class="new" src="{{assetPath}}images/recent.svg" alt="new">
+                                </span> -->
+                                {{element.quantity}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="totalCost">
+                            <mat-header-cell *matHeaderCellDef class="mattoalcost"  > 
+                                <img mat-sort-header (click)="sortbyname()"   class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                                 {{ resourceMessage && resourceMessage['TotalCostlbl'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                <!-- <span class="published" *ngIf="element.statusName.toLowerCase() == 'published'"> 
+                                    {{ resourceMessage && resourceMessage['Publishedlbl'] }}
+                                 </span> -->
+                                 <!-- <span class="recent" *ngIf="element.recentBuy" >
+                                     <img  class="new" src="{{assetPath}}images/recent.svg" alt="new">
+                                </span> -->
+                                {{element.totalCost | currency}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                            <mat-header-cell *matHeaderCellDef > 
+                                <!-- <img  class="sort" src="{{assetPath}}images/sort.svg" alt="new">  -->
+                                 {{ resourceMessage && resourceMessage['Actionlbl'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                <!-- <span class="published" *ngIf="element.statusName.toLowerCase() == 'published'"> 
+                                    {{ resourceMessage && resourceMessage['Publishedlbl'] }}
+                                 </span> -->
+                                 <!-- <span class="recent" *ngIf="element.recentBuy" >
+                                     <img  class="new" src="{{assetPath}}images/recent.svg" alt="new">
+                                </span> -->
+                                <input type="button" id="order-button" (click)="openOrderPopup(element)"  value="{{ orderData && !orderData.status ? 'Details' : resourceMessage && resourceMessage['OrderBtn']}}" ng class="btn btn-primary btnorder"> </mat-cell>
+                        </ng-container>
+            
+                        <mat-header-row *matHeaderRowDef="displayedColumns" class="programelement"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumns;">
+                        </mat-row>
+                    </mat-table>
+                    
+                      </div>
+    
+            </div>
+            <div class="row totallist-row" *ngIf="this.dataSource.data.length>0">
+                <div class="row totalrow">
+                    <div class="col-md-1 total">{{ resourceMessage && resourceMessage['Totallbl'] }}</div>
+                <div class="col-md-6" style="align-self: center;"></div>
+                <!-- <div class="col-md-1" style="align-self: center;" ></div>  -->
+                <div class="col-md-1 total" style="text-align: left; padding-left: 2%;" >{{totalQty}} </div>
+                <div class="col-md-2 total" style="padding-left: 5%;">{{totalAmount | currency}} </div>
+                </div>
+                
+            </div>
+            <div class="row" *ngIf="this.dataSource.data.length>0">
+                <div class="col-12" style="display: flex; justify-content: center;">
+                <div (click)="previousClicked()"><i [ngStyle]="{'color':(startIndex === 1) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(startIndex !== 1) ? 'pointer-class' : ''" class="fa fa-angle-left pagination-icons"></i></div>
+                <div *ngFor="let page of getPageList() let i=index">
+                
+                <div class="pointer-class pagination-item" style="padding: 20px;"  (click)="changePage(page)">
+                    <p style="padding-top: 5px;"  [ngClass]="(page === selectedPage) ? 'selectedPage': ''">{{page}}</p>
+                </div>
+                </div>
+                <div (click)="nextClicked()"><i [ngStyle]="{'color':(endIndex === noOfPages) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(endIndex !== noOfPages) ? 'pointer-class' : ''" class="fa fa-angle-right pagination-icons"></i></div>
+                </div>
+            </div>
+            <div *ngIf="this.dataSource.data.length==0">{{ resourceMessage &&
+                resourceMessage['Norecordslbl'] }}</div>
+        </div>
+        <mat-paginator style="display: none;"  [pageSizeOptions]="[10]"></mat-paginator>
+         <div class="row pgmdetails items" style="margin-top: 40px;" *ngIf="(dataSource && appCommonFunctions.isMobileCompatibleScreen())">
+            <div class="col-md-12  itemdetails">
+                <div class="pgmdetailslbl itemnamelbl">{{ resourceMessage && resourceMessage['ItemListlbl'] }} {{selectedProgram.programName}} </div>           
+                </div>
+                <div class="calender-input">
+                    <input style="width: 100%;" (keyup.enter)="search(txtsearch.value)" class="search-box input-class input-class-name mobile-search-box" #txtsearch placeholder="{{resourceMessage && resourceMessage['searchPlaceholderProgramOrder']}}" (keyup.enter)="search(txtsearch.value)">
+                    <i p-icon class="material-icons search-icon-mobile" (click)="search(txtsearch.value)">search</i>
+                </div>
+                <div class="example-container">
+                    <mat-table #table [dataSource]="dataSource" *ngIf="this.dataSource.data.length" matSort>
+                        <ng-container matColumnDef="itemName">
+                            <mat-header-cell style="font-size: 14px;" *matHeaderCellDef> 
+                                 <span ><img class="sort" mat-sort-header (click)="sortbyname()" src="{{assetPath}}images/sort.svg" alt="new"> {{ resourceMessage && resourceMessage['ElementDetailsLbl'] }} </span></mat-header-cell>
+                            <mat-cell style="width: 30%;" *matCellDef="let element">
+                                <div attr.id="{{element.itemName}}" #tooltip="matTooltip" (click)="tooltip.toggle()" [matTooltip]="isToolTipExists(element.itemName)" class="truncate-overflow">{{element.itemName}} </div>
+                                <div attr.id="{{element.shortDescription}}" #tooltip1="matTooltip" (click)="tooltip1.toggle()" [matTooltip]="isToolTipExists(element.shortDescription)" class="shortdescription truncate-overflow">{{element.shortDescription}}</div>
+                                <div class="title-line-height" class="title-line-height"> {{element.unitPrice | currency}}</div>
+                             </mat-cell>
+                        </ng-container>
+            
+                        <ng-container matColumnDef="quantity">
+                            <mat-header-cell style="font-size: 14px;" *matHeaderCellDef   > 
+                                <img  mat-sort-header (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                                 {{ resourceMessage && resourceMessage['Ordqtylbl'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                {{element.quantity}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="totalCost">
+                            <mat-header-cell style="font-size: 14px;" *matHeaderCellDef  class="mattoalcost"  > 
+                                <img  mat-sort-header (click)="sortbyname()" class="sort" src="{{assetPath}}images/sort.svg" alt="new"> 
+                                 {{ resourceMessage && resourceMessage['Costlbl'] }}</mat-header-cell>
+                            <mat-cell *matCellDef="let element" >
+                                {{element.totalCost | currency}} </mat-cell>
+                        </ng-container>
+                        <ng-container matColumnDef="action">
+                            <mat-header-cell style="padding-right: 0px;font-size: 14px;" *matHeaderCellDef mat-sort-header  > 
+                                 </mat-header-cell>
+                            <mat-cell style="padding-right: 0px;" *matCellDef="let element" >
+                                <img class="sort" (click)="openOrderPopup(element)" src="{{assetPath}}images/nexticon.svg" alt="new">
+                                <!-- <i type="button" id="order-button" (click)="openOrderPopup(element)"  value="{{resourceMessage && resourceMessage['OrderBtn']}}" ng class="btn btn-primary btnorder">  -->
+                                </mat-cell>
+                        </ng-container>
+            
+                        <mat-header-row *matHeaderRowDef="displayedColumnsMobile" class="programelement"></mat-header-row>
+                        <mat-row *matRowDef="let row; columns: displayedColumnsMobile;">
+                        </mat-row>
+                    </mat-table>
+                    <mat-paginator style="display: none" [pageSizeOptions]="[10]"></mat-paginator>
+                </div>
+                <div class="row" style="margin-top: 5%;" *ngIf="this.dataSource.data.length>0">
+                        <div class="col-4 total-mobile totallasat">{{ resourceMessage && resourceMessage['Totallbl'] }}</div>
+                    <div class="col-2 total-mobile qtylast" >{{totalQty}} </div>
+                    <div class="col-2 total-mobile amountlast">{{totalAmount | currency}} </div>>
+                </div>
+                <div class="row" *ngIf="this.dataSource.data.length>0">
+                    <div class="col-12" style="display: flex; justify-content: center;">
+                    <div (click)="previousClicked()"><i [ngStyle]="{'color':(startIndex === 1) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(startIndex !== 1) ? 'pointer-class' : ''" class="fa fa-angle-left pagination-icons"></i></div>
+                    <div *ngFor="let page of getPageList() let i=index">
+                    
+                    <div class="pointer-class pagination-item" style="padding: 20px;"  (click)="changePage(page)">
+                        <p style="padding-top: 5px;"  [ngClass]="(page === selectedPage) ? 'selectedPage': ''">{{page}}</p>
+                    </div>
+                    </div>
+                    <div (click)="nextClicked()"><i [ngStyle]="{'color':(endIndex === noOfPages) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(endIndex !== noOfPages) ? 'pointer-class' : ''" class="fa fa-angle-right pagination-icons"></i></div>
+                    </div>
+                </div>
+                <div *ngIf="this.dataSource.data.length==0">{{ resourceMessage &&
+                    resourceMessage['Norecordslbl'] }}</div>
+         </div>
+    </div>
+

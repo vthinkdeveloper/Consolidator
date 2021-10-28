@@ -1,0 +1,79 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerProgram" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+<div *ngIf="!appCommonFunctions.isMobileCompatibleScreen()"  class="container-fluid">
+    <div class="row search-bar">
+        <div class="col-12">
+           <div class="calender-input">
+               <input  class="search-box input-class input-class-name" #txtsearch (keyup.enter)="search(txtsearch.value)" placeholder="{{resourceMessage &&
+                 resourceMessage['searchPgmplaceholder'] }}" >
+                 <button class="fa fa-search search-button" aria-hidden="true" (click)="search(txtsearch.value)" ></button>
+           </div>
+        </div>
+    </div>
+
+    <mat-tab-group animationDuration="0ms" [ngStyle]="{'min-height':(isloaded === false) ? '300px' :  ''}" [selectedIndex]="0" (selectedTabChange)="programListComponent.tabChanged($event)" >
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="dot"></span>
+          <span class="windowtype">{{ resourceMessage &&
+            resourceMessage['ActivePgmslbl'] }}</span>
+          <span class="buywindow-count">{{activeprogramDetails.length}}</span>
+        </ng-template>
+        <div class="norecords" *ngIf="activeprogramDetails.length == 0 && getElementLoading() && isloaded">{{ resourceMessage &&
+          resourceMessage['Norecordslbl'] }}</div>
+        <app-published-program-list #programListComponent [assetPath]="assetPath"  [status]="status[0]" [unFilteredprogramlist]="programDetails" [programlist]="activeprogramDetails"  ></app-published-program-list>
+      </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="dot"></span>
+            <span class="windowtype">{{ resourceMessage &&
+                resourceMessage['CompletedPgmslbl'] }}</span>
+            <span class="buywindow-count">{{completedprogramDetails.length}}</span>
+          </ng-template>
+          <div class="norecords" *ngIf="completedprogramDetails.length == 0 && isloaded">{{ resourceMessage &&
+            resourceMessage['Norecordslbl'] }}</div>
+          <app-published-program-list #programListComponent [assetPath]="assetPath"   [status]="status[1]" [unFilteredprogramlist]="programDetails" [programlist]="completedprogramDetails"></app-published-program-list>
+        </mat-tab>
+      </mat-tab-group>
+
+</div>
+<div *ngIf="appCommonFunctions.isMobileCompatibleScreen()"  class="container-fluid">
+  <div class="row search-bar">
+    <div class="col-12">
+      <div class="calender-input">
+          <input class="search-box input-class input-class-name search-input-class input-class-mobile" #txtsearch  placeholder="{{resourceMessage &&
+            resourceMessage['searchPgmplaceholder'] }}" (keyup.enter)="search(txtsearch.value)" >
+            <i class="fa fa-search search-button search-button-mobile" aria-hidden="true" (click)="search(txtsearch.value)" ></i>
+      </div>
+   </div>
+  </div>
+
+  <mat-tab-group animationDuration="0ms" [ngStyle]="{'min-height':(isloaded === false) ? '300px' :  ''}" [selectedIndex]="0" (selectedTabChange)="programListComponent.tabChanged($event)" >
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="dot"></span>
+        <span class="windowtype">{{ resourceMessage &&
+          resourceMessage['Activelbl'] }}</span>
+        <span class="buywindow-count">{{activeprogramDetails.length}}</span>
+      </ng-template>
+      <div class="norecords" *ngIf="activeprogramDetails.length == 0 && getElementLoading() && isloaded">{{ resourceMessage &&
+        resourceMessage['Norecordslbl'] }}</div>
+      <app-published-program-list #programListComponent [assetPath]="assetPath"  [status]="status[0]" [unFilteredprogramlist]="programDetails" [programlist]="activeprogramDetails"  ></app-published-program-list>
+    </mat-tab>
+      <mat-tab>
+        <ng-template mat-tab-label>
+          <span class="dot"></span>
+          <span class="windowtype">{{ resourceMessage &&
+              resourceMessage['Compeletedlbl'] }}</span>
+          <span class="buywindow-count">{{completedprogramDetails.length}}</span>
+        </ng-template>
+        <div class="norecords" *ngIf="completedprogramDetails.length == 0 && isloaded">{{ resourceMessage &&
+          resourceMessage['Norecordslbl'] }}</div>
+        <app-published-program-list #programListComponent [assetPath]="assetPath"   [status]="status[1]" [unFilteredprogramlist]="programDetails" [programlist]="completedprogramDetails"></app-published-program-list>
+      </mat-tab>
+    </mat-tab-group>
+
+</div>

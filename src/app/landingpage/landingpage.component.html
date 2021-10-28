@@ -1,0 +1,59 @@
+<img *ngIf="appConstants.isMobileCompatibleScreen()" id="sidebar-button-mobile" src="{{assetPath}}images/menu-icon.svg" (click)="showMenuScreenClicked()" >
+<div *ngIf="appConstants.isMobileCompatibleScreen() && showMenuScreen" id="mobile-screen-menu" class="mobile-screen-menu">
+ <div class="row" style="background-color: white;height: 66px;width: 100%;margin: 0;">
+    <div class="col-3" >
+        <img style="margin-top: 5px;" (click)="showMenuScreenClicked()" class="pointer-class close-icon" src='{{assetPath}}images/close.svg'>
+    </div>
+    <div class="col-9 imageclass">
+        <img style="margin-top: 5px;" id="brandmusclelogo" class="pointer-class" src='{{assetPath}}images/brandmuscle.svg'>
+    </div>
+  </div>
+  
+  <div class="side-menu row" style="height: 66px;width: 100%;margin: 0;" *ngFor="let menu of menuArray; let i = index;" (click)="routeElement(menu.url);showMenuScreenClicked()" [ngClass]="selectedMenu == i ? 'selectedClass' : '' " >
+    <div style="margin-top: 3%;text-align: left;" class="col-3">
+     <img [ngStyle]="{'padding-left':(i === 2) ? '60%' : '50%'}"  class="pointer-class" *ngIf="selectedMenu != i" (click)="routeElement(menu.url);" src='{{menu.logo}}' alt="home">
+        <img [ngStyle]="{'padding-left':(i === 2) ? '60%' : '50%'}"  class="pointer-class" *ngIf="selectedMenu == i" (click)="routeElement(menu.url);" src='{{menu.activelogo}}' alt="home">
+    </div>
+    <div style="text-align: left;margin-top: 3%;" class="col-9">
+     <p class="mobile-menu-view" >{{menu.name}}</p>
+  </div>
+  </div>
+</div>
+<app-header *ngIf="showHeaderScreen"></app-header>
+<img *ngIf="!appConstants.isMobileCompatibleScreen() && showSidebarButton" (mouseenter) ="changeFocusImage()" (mouseleave) ="changeNormalImage()" (focus) ="showExpandIcon()" id="sidebar-button" src="{{assetPath}}images/expand-white.svg" (click)="sidenav.toggle();toggleSideBar()">
+<div *ngIf="!appConstants.isMobileCompatibleScreen()" class="sidebar" >
+    <div *ngFor="let menu of menuArray; let i = index;"  attr.id="{{i}}logo" class="side-button" [ngClass]="[selectedMenu == i ? 'selectedClass' : '', i == 2 ? 'lastclass' : '', i == 0 ? 'firstclass' : '']">
+        <img class="pointer-class" *ngIf="selectedMenu != i" (click)="routeElement(menu.url);" src='{{menu.logo}}' alt="home">
+        <img class="pointer-class" *ngIf="selectedMenu == i" (click)="routeElement(menu.url);" src='{{menu.activelogo}}' alt="home">
+    </div>
+</div>
+<mat-sidenav-container>
+    <mat-sidenav #sidenav [mode]="mode" [(opened)]="opened" (opened)="events.push('open!')"
+                 (closed)="events.push('close!')"  (mouseenter) ="showExpandIcon()">
+                 <div class="side-menu-empty">
+
+                 </div> 
+                 <div style="position: fixed;width: 149px;" *ngIf="!appConstants.isMobileCompatibleScreen()">
+                    <div class="side-menu" *ngFor="let menu of menuArray; let i = index;" (click)="routeElement(menu.url)" [ngClass]="selectedMenu == i ? 'selectedClass' : '' " >
+                        <p>{{menu.name}}</p>
+                     </div>
+                 </div>
+                 <div *ngIf="appConstants.isMobileCompatibleScreen()">
+                    <div class="side-menu row" *ngFor="let menu of menuArray; let i = index;" (click)="routeElement(menu.url);sidenav.toggle();" [ngClass]="selectedMenu == i ? 'selectedClass' : '' " >
+                       <div class="col-3">
+                        <img style="padding-left: 50%;" class="pointer-class" src='{{menu.logo}}'>
+                       </div>
+                       <div style="text-align: left;" class="col-9">
+                        <p>{{menu.name}}</p>
+                     </div>
+                     </div>
+                 </div>
+    </mat-sidenav>
+    
+    <mat-sidenav-content (mouseenter) ="hideExpandIcon()">     
+       
+        <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+  
+<app-footer></app-footer>

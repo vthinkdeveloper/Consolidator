@@ -1,0 +1,148 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContaineritem" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+
+<div class="container-fluid">
+    <!-- <h1>{{ resourceMessage && resourceMessage['CreateBuyLbl'] }}</h1> -->
+    <div class="row" style="margin-top: 2%">
+        <div class="col-lg-9">
+            <div class="row">
+                <div class="col-6 col-lg-3" style="padding-right: 0px">   
+                    <div ngbDropdown class="d-inline-block">
+                        <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
+                            <span id="categoryname" >{{ resourceMessage &&
+                                resourceMessage['AllCategories'] }}</span>
+                            <span id="categoryid" #categoryid style="display: none;">0</span>
+                        </button>
+                        <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                          <button ngbDropdownItem [ngClass]="selectedCategoryId === 0 ? 'filter-button-background-color' : ''" (click)="selectCategory($event,0)">{{ resourceMessage &&
+                            resourceMessage['AllCategories'] }}</button>
+                          <button ngbDropdownItem [ngClass]="selectedCategoryId === 1 ? 'filter-button-background-color' : ''"  (click)="selectCategory($event,1)">{{ resourceMessage &&
+                            resourceMessage['BuyWindow'] }}</button>
+                          <button ngbDropdownItem [ngClass]="selectedCategoryId === 2 ? 'filter-button-background-color' : ''" (click)="selectCategory($event,2)">{{ resourceMessage &&
+                            resourceMessage['Programname'] }}</button>
+                          <button ngbDropdownItem [ngClass]="selectedCategoryId === 3 ? 'filter-button-background-color' : ''" (click)="selectCategory($event,3)">{{ resourceMessage &&
+                            resourceMessage['SKUnumber'] }}</button>
+                        </div>
+                      </div>
+                </div>
+                <div class="col-6 col-lg-9" style="padding-left: 0px">
+                    <div class="calender-input">
+                        <input class="search-box input-class input-class-name" (keyup.enter)="search(txtsearch.value, categoryid.innerHTML)" #txtsearch placeholder="{{resourceMessage &&
+                            resourceMessage['Searchlbl'] }}">
+                        <button class="fa fa-search search-button" aria-hidden="true" (click)="search(txtsearch.value, categoryid.innerHTML)" ></button>
+                    </div>
+                    
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-3">
+            <button (click)="openCreateWindowTemplate(createBuyWindowTemplate)" class="create-button">{{ resourceMessage &&
+                resourceMessage['CreateNewBuyBtn'] }}</button>
+        </div>
+    </div>
+    <div class="tabgroup">
+        <div class="filterdiv">
+            <div ngbDropdown class="d-inline-block ddlfilter" id="ddlfilter" [ngClass]="tabindex == '1'? 'showclass' : 'hideclass'">
+                <button class="btn btn-outline-primary" id="filterdropdown" ngbDropdownToggle>
+                    <span id="Filtername" >{{ resourceMessage &&
+                      resourceMessage['Filterlbl'] }}</span>
+                    <span id="Filterid" #categoryid style="display: none;">0</span>
+                </button>
+                <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+                  <button ngbDropdownItem [ngClass]="!filterSelectedValue ? 'filter-button-background-color' : ''"  (click)="getFilter($event,0,'none')">{{ resourceMessage &&
+                    resourceMessage['Filterlbl'] }}</button>
+                  <button ngbDropdownItem [ngClass]="filterSelectedValue === 30 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,30,'days')">{{ resourceMessage &&
+                    resourceMessage['Past30days'] }}</button>
+                  <button ngbDropdownItem [ngClass]="filterSelectedValue === 3 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,3,'months')">{{ resourceMessage &&
+                    resourceMessage['Past3months'] }}</button>
+                  <button ngbDropdownItem [ngClass]="filterSelectedValue === 6 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,6,'months')">{{ resourceMessage &&
+                    resourceMessage['Past6months'] }}</button>
+                  <button ngbDropdownItem [ngClass]="filterSelectedValue === 2021 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2021,'years')">{{ resourceMessage &&
+                    resourceMessage['2021lbl'] }}</button>
+                  <button ngbDropdownItem [ngClass]="filterSelectedValue === 2020 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2020,'years')">{{ resourceMessage &&
+                    resourceMessage['2020lbl'] }}</button>
+                    <button ngbDropdownItem [ngClass]="filterSelectedValue === 2019 ? 'filter-button-background-color' : ''"  (click)="getFilter($event,2019,'years')">{{ resourceMessage &&
+                      resourceMessage['2019lbl'] }}</button>
+                </div>
+              </div>
+        </div>
+    <mat-tab-group animationDuration="0ms" [selectedIndex]="0" (selectedTabChange)="buyWindowListComponent.tabChanged($event)">
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="dot"></span>
+          <span class="windowtype">{{ resourceMessage &&
+            resourceMessage['ActiveBuy'] }}</span>
+          <span class="buywindow-count">{{activebuywindowlist.length}}</span>
+        </ng-template>
+        <app-buywindow-list #buyWindowListComponent (tabchange)="tabchange($event)" (filterperiod)="changefilter($event)"  [assetPath]="assetPath" (callBuyWindowList)="loadBuywindowlist(null,null)" [status]="status[0]" [unFilteredbuywindowlist]="buywindowlist" [buywindowlist]="activebuywindowlist" [activebuywindowlist]="activebuywindowlist" [archivedbuywindowlist]="archivedbuywindowlist" [searchText]="searchText" [searchCategoryid]="searchCategoryid"></app-buywindow-list>
+      </mat-tab>
+        <mat-tab>
+          <ng-template mat-tab-label>
+            <span class="dot"></span>
+            <span class="windowtype">{{ resourceMessage &&
+                resourceMessage['ArchivedBuy'] }}</span>
+            <span class="buywindow-count">{{archivedbuywindowlist.length}}</span>
+            
+          </ng-template>
+          
+          <app-buywindow-list #buyWindowListComponent (tabchange)="tabchange($event)" [assetPath]="assetPath"  (callBuyWindowList)="loadBuywindowlist(null,null)" [status]="status[1]" [unFilteredbuywindowlist]="buywindowlist" [buywindowlist]="archivedbuywindowlist" [searchText]="searchText" [activebuywindowlist]="activebuywindowlist" [archivedbuywindowlist]="archivedbuywindowlist" [searchCategoryid]="searchCategoryid"></app-buywindow-list>
+        </mat-tab>
+      </mat-tab-group>
+    </div>
+    
+    
+    
+    <ng-template #createBuyWindowTemplate>
+        <div>
+            <button type="button" class="close close-font pointer-class" aria-label="Close" (click)="closePopup()">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+        <div class="modal-body">
+            <h4 class="popup-heading"> {{ resourceMessage && resourceMessage['CreateBuyLbl'] }}</h4>
+            <form [formGroup]="createBuyWindowForm" (ngSubmit)="submitForm()">
+            <div class="popup-input">
+                <label class="input-label">{{ resourceMessage && resourceMessage['BuyWindowNameLbl'] }}</label>
+                <input class="input-class input-class-name" name="fullName" autocomplete="off"
+                    formControlName="buyWindowName" maxlength="150" required="required" />
+                <div *ngIf="createBuyWindowForm.controls['buyWindowName'].invalid && (submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                    resourceMessage['BuyNameVal'] }}</div>
+            </div>
+            <div class="popup-input">
+                <label class="input-label">{{ resourceMessage && resourceMessage['StartDateLbl'] }}</label>
+                <div class="calender-input">
+                    <i class="fa fa-calendar calender-input-img cal-icon" aria-hidden="true"></i>
+                    <input #startDatePicker="bsDatepicker" type="text" autocomplete="off"
+                        placeholder="MM-DD-YYYY" [minDate]="minDate" [maxDate]="maxDate" formControlName="startDate" (keydown)="appCommonFunctions.preventTyping($event)" [dateCustomClasses]="dateCustomClasses" class="input-class" bsDatepicker>
+                    <i (click)="startDatePicker.toggle()" class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="createBuyWindowForm.controls['startDate'].invalid && (submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                    resourceMessage['StartDateVal'] }}</div>
+            </div>
+            <div class="popup-input">
+                <label class="input-label">{{ resourceMessage && resourceMessage['EndDateLbl'] }}</label>
+                <div class="calender-input">
+                    <i class="fa fa-calendar calender-input-img cal-icon" aria-hidden="true"></i>
+                    <input #endDatePicker="bsDatepicker" type="text" autocomplete="off"
+                        placeholder="MM-DD-YYYY" [minDate]="minDate" [maxDate]="maxDate" formControlName="endDate" (keydown)="appCommonFunctions.preventTyping($event)" [dateCustomClasses]="dateCustomClasses" class="input-class" bsDatepicker>
+                    <i (click)="endDatePicker.toggle()" class="fa fa-caret-down calender-input-img" aria-hidden="true"></i>
+                </div>
+                <div *ngIf="((createBuyWindowForm.controls['endDate'].invalid && createBuyWindowForm.controls.endDate.errors.required) && submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                    resourceMessage['EndDateVal'] }}</div>
+                <div *ngIf="((createBuyWindowForm.controls['endDate'].invalid && createBuyWindowForm.controls.endDate.errors.mustMatch) && submitButtonClicked)" class="card-error-text">{{ resourceMessage &&
+                    resourceMessage['BuyDateVal'] }}</div>
+            </div>
+            <div class="container">
+                <div class="text-center">
+                    <button class="button-class savebutton" [ngClass]="[isLoading ? 'submit': '',!createBuyWindowForm.valid ? 'invalid-button' : 'valid-button']"
+                      type="submit">{{ resourceMessage && resourceMessage['CreateBuyBtn'] }}</button>
+                </div>
+            </div>
+          </form>
+        </div>
+    </ng-template>
+  
+</div>

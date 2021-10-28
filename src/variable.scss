@@ -1,0 +1,31 @@
+
+
+@font-face {
+    font-family: 'SF Pro Display Regular';
+    src: url('assets/font/SF-Pro-Display-Regular.otf');
+  }
+
+@font-face {
+    font-family: 'SF Pro Display Medium';
+    src: url('assets/font/SF-Pro-Display-Medium.otf');
+  }
+
+@font-face {
+    font-family: 'SF Pro Display Bold';
+    src: url('assets/font/SF-Pro-Display-Bold.otf');
+  }
+
+@font-face {
+    font-family: 'SF Pro Display Semibold';
+    src: url('assets/font/SF-Pro-Display-Semibold.otf');
+  }
+ 
+$font-family:"SF Pro Display Regular";
+$font-family-regular:"SF Pro Display Regular";
+$font-family-medium: "SF Pro Display Medium";
+$font-family-bold: "SF Pro Display Bold";
+$font-family-Semibold: "SF Pro Display Semibold";
+
+$font-color: "#fff";
+$background-color:"#006EF5";
+ 

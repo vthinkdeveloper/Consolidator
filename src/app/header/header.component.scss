@@ -1,0 +1,131 @@
+
+@import '../../variable.scss';
+
+.header-div{
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+}
+
+.fake-link{
+    color:var(--header-front-color);
+    line-height: 24px;
+    text-decoration: none;
+    font-family: $font-family-regular;
+    font-size: 14px;
+    letter-spacing: 0;
+    flex-direction: row;
+    box-sizing: border-box;
+    display: flex;
+    place-content: center;
+    align-items: center;
+}
+
+.header {
+  margin: 0px 50px 0px 50px;
+  margin-left: 0px;
+  margin-right: 0px;
+  height: 70px;
+  background-color: var(--header-back-color);
+  padding: 20px;
+  color: var(--header-front-color);
+  font-family: $font-family-regular;
+  font-size: 14px;
+  letter-spacing: 0;
+  line-height: 18px;
+
+  img {
+    max-height: 30px;
+  }
+
+  .fake-link {
+    color: var(--header-front-color);
+    font-family: $font-family-regular;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 24px;
+    text-decoration: none;
+  }
+
+  .dropdown-button {
+    color: var(--header-front-color);
+    font-family: $font-family-regular;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 18px;
+
+    button {
+      padding: 0px;
+
+      .mat-icon {
+        margin-left: 25px;
+      }
+    }
+  }
+
+}
+
+.header-mobile {
+  height: 70px;
+  background-color: var(--app-selection-background-color);
+  margin: auto;
+}
+
+#sidebar-button-mobile{
+  transition: all 1s ease-in-out;
+  cursor: pointer;
+  margin-top: 5%;
+  position: fixed;
+  margin-right: 5%;
+  width: 30px;
+  height: 30px;
+}
+
+.title-class {
+  letter-spacing: 0;
+  line-height: 41px;
+  text-align: center;
+  margin-top: 4%;
+  font-size: 18px;
+  color: var(--app-primarytext-color);
+  font-family: $font-family-medium;
+}
+
+// @media (min-width: $tablet-width) and (max-width: $desktop-width - 1px) {
+//     .header {
+//       width: 100%;
+//     }
+// }
+
+// @media (max-width: $tablet-width - 1px) {
+//     .header {
+//       width: 100%;
+//     }
+// }
+  @media (max-width: 600px) {
+    .header-mobile {
+      height: 70px;
+    }
+  }
+
+
+  @media all and (min-device-width: 768px) and (max-device-width: 1024px) {
+    .header-mobile {
+      height: 120px;
+    }
+    .mat-drawer-container{
+      margin-left: 0px !important;
+    }
+  }
+  
+  @media all and (min-device-width: 1025px) and (max-device-width: 2738px) {
+    .header-mobile {
+      height: 120px;
+    }
+    .mat-drawer-container{
+      margin-left: 0px !important;
+    }
+    .search-button-mobile{
+      padding-top: 1%;
+    }
+  }

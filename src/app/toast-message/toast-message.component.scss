@@ -1,0 +1,28 @@
+@import '../../variable.scss';
+
+.close-font {
+    float: right;
+    color: #979797;
+    font-size: 2rem;
+    border: none;
+    background-color: #FFFFFF;
+    font-weight: 200;
+    top: 15px;
+    position: absolute;
+    right: 15px;
+    height: 22px;
+    width: 20px;
+}
+.icondiv{
+    float: left;
+    padding-left: 5px;
+    padding-right: 0px;
+}
+.messagediv{
+    text-align: left;
+    color: var(--app-font-color);
+    font-family: $font-family-regular;
+    font-size: 18px;
+    letter-spacing: 0;
+    line-height: 24px;
+}

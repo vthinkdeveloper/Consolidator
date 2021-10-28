@@ -1,0 +1,26 @@
+<ng-template #archiveElement>
+    <div>
+        <img src="{{assetPath}}images/close.svg" (click)="cancelClicked()" class="close close-font pointer-class">
+        
+      <!-- <button type="button" class="close close-font pointer-class" aria-label="Close" (click)="cancelClicked()">
+          <span aria-hidden="true">&times;</span>
+      </button> -->
+  </div>
+    <div *ngIf="!popupObject.isAdminScreen" class="pop-uptext">
+       {{ popupObject.title }} <br> <span class="popup-text-name">{{ popupObject.selectedItem }}</span> <span> {{popupObject.type}} </span> ?
+    </div>
+    <div *ngIf="popupObject.isAdminScreen" class="pop-uptext">
+        {{ popupObject.title }} <span class="popup-text-name">{{ popupObject.selectedItem }}</span><br> 
+        <div> {{popupObject.type}} </div>
+     </div>
+    <div class="popup-buttons">
+        <div class="popup-cancel" (click)="cancelClicked()">
+            <p class="pop-up-text"> {{ popupObject.cancelButtonTile }}
+            </p>
+        </div>
+        <div class="popup-confirm" (click)="okClicked()">
+            <p class="pop-up-text"> {{ popupObject.okButtonTitle }}
+            </p>
+        </div>
+    </div>
+</ng-template>

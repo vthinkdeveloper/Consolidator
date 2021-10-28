@@ -1,0 +1,12 @@
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerOrder" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+<div class="container-fluid">
+    <form-builder #form [form]="formDefinition"></form-builder>
+    <div class="btndiv">
+        <input type="button" id="save-button" (click)="saveChanges()" value="{{ resourceMessage && resourceMessage['SaveChangesBtn'] }}" ng class="btn btn-primary btnsavechanges">
+    </div>
+</div>
+

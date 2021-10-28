@@ -1,0 +1,141 @@
+
+<span class="loadingSpinnerContainerdata"  id="loadingSpinnerContainerOrderpopup" style="display: none;" >
+    <div class="loader">
+      <img  class="loading" src="{{data.assetPath}}images/loader.gif" alt="loader">
+    </div>
+  </span>
+
+<div class="modal-body">
+    <div class="closepopup">
+        <img src="{{data.assetPath}}images/close.svg" (click)="closeModel()" class="close close-font pointer-class">
+
+    </div>
+    <div id='elementrow' class="row element-row" >    
+        <div class="col-2">
+            <app-image-card [type]="'programElement'" [thumbnailImagePath]="data.element.thumbnailImagePath" [isround]="false"></app-image-card>
+        </div>
+        <div class="col-7">
+            <div class="row">
+                <div class="col-md-12 itemname" >{{data.element.itemName}}</div>
+            </div>  
+            <div class="row itemdetails">
+                <div class="col-3 rowlbl rowunitprice">{{ resourceMessage && resourceMessage['Pricelbl'] }}</div>
+                <div class="col-3 rowlbl ordqty">{{ resourceMessage && resourceMessage['OrderedQtyLbl'] }}</div>
+            </div> 
+            <div class="row">
+                <div class="col-3 rowvalue unitprice">{{data.element.unitPrice | currency }}</div>
+                <div class="col-3 rowvalue" id="TotalQTY">{{data.element.quantity}}</div>
+            </div> 
+        </div>
+        <div class="col-3 totalcostdiv">
+            <div id="TotalAmount">{{data.element.totalCost | currency}}</div>
+            <span class="totalcost">{{ resourceMessage && resourceMessage['TotalCostlbl'] }}</span> 
+        </div>
+    </div>
+    <div class="row table-row" style="padding-bottom: 50px;">
+        <div id='selectedAddLbl' class="selectedaddrlbl">{{ resourceMessage && resourceMessage['SelectedAddLbl'] }}</div>
+        <div id='searchinputbox' class="calender-input">
+            <i p-icon class="material-icons search-icon">search</i>
+            <input class="search-box input-class input-class-name" #txtsearch (keyup.enter)="search(txtsearch.value)" placeholder="{{ resourceMessage && resourceMessage['SearchAddrlbl'] }}" (keyup.enter)="search(txtsearch.value)">
+            <button class="fa fa-search search-button" aria-hidden="true" (click)="search(txtsearch.value)" ></button>
+        </div>
+
+        
+        <div id='containerrow'  class="example-container">
+            <mat-table #table [dataSource]="dataSource" *ngIf="this.dataSource && this.dataSource.data.length>0"  matSort>       
+            
+                <ng-container matColumnDef="companyName">
+                    <mat-header-cell *matHeaderCellDef  >
+                        <img mat-sort-header (click)="sortbyname()"  class="sort" src="{{data.assetPath}}images/sort.svg" alt="new">
+                        {{ resourceMessage && resourceMessage['CompanyLbl'] }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="companyname leftalign" >
+                       <div class="truncate-overflow" attr.id="{{element.companyName}}" [matTooltip]="iscompanyToolTipExists(element)">
+                        {{element.companyName}}
+                       </div>  
+                    </mat-cell>
+                </ng-container>
+        
+            
+                <ng-container matColumnDef="contactName">
+                    <mat-header-cell *matHeaderCellDef    >
+                        <img  mat-sort-header (click)="sortbyname()" class="sort" src="{{data.assetPath}}images/sort.svg" alt="new">
+                        {{ resourceMessage && resourceMessage['ContactLbl'] }} 
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="date-class"  > 
+                        <div class="truncate-overflow" attr.id="{{element.contactName}}" [matTooltip]="iscontactToolTipExists(element)">{{element.contactName}}</div>
+                     </mat-cell>
+                </ng-container>
+        
+                
+                <ng-container matColumnDef="addressLine1">
+                    <mat-header-cell *matHeaderCellDef  >
+                        <img mat-sort-header (click)="sortbyname()"   class="sort" src="{{data.assetPath}}images/sort.svg" alt="new">
+                        {{ resourceMessage && resourceMessage['AddressLbl'] }}
+                    </mat-header-cell>
+                    <mat-cell *matCellDef="let element" class="leftalign">
+                    
+                        <div *ngIf="element && element.lmeId" class="addressline truncate-overflow" attr.id="{{element && element.lmeId}}"   [matTooltip]="isaddressToolTipExists(element)">
+                            {{element && element.addressLine1}}
+                            {{element.addressLine2}} {{element.city}} {{element.state}}, {{element.postalCode}}
+                        </div>
+                       
+                    </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="quantity" >
+                    <mat-header-cell *matHeaderCellDef  >{{ resourceMessage && resourceMessage['Quantitylbl'] }} <span class="separator" *ngIf="data.orderStatus">|</span><span class="clearclass" (click)="clear()" *ngIf="data.orderStatus" >{{ resourceMessage && resourceMessage['ClearLbl'] }}</span> </mat-header-cell>
+                    <mat-cell *matCellDef="let element; let i = index;" >                         
+                        <!-- <button class="circle minus newminus nomobile" *ngIf="data.orderStatus" id="{{ 'minus' + element.lmeId }}" (click)="updateqty(element.lmeId,'minus',this.paginator.pageIndex == 0 ? i  :  i + this.paginator.pageIndex * this.paginator.pageSize)"></button> -->
+                        <a class="qtychange" *ngIf="data.orderStatus" id="{{ 'minus' + element.lmeId }}" (click)="updateqty(element.lmeId,'minus',this.paginator.pageIndex == 0 ? i  :  i + this.paginator.pageIndex * this.paginator.pageSize)"><img src="{{data.assetPath}}images/minus.svg"></a>
+                        <div class="placeholder" >
+                <span *ngIf="!data.orderStatus" class="qtyview">{{element.quantity == undefined ? 0 : element.quantity}}</span>
+                <input type="text" *ngIf="data.orderStatus" NumbersOnlyInputDirective id="{{ 'txtqty' + element.lmeId }}" #txtqty  class="txtqty" (keypress)="appCommonFunctions.omit_special_char($event)"  [(ngModel)]="element.quantity == undefined ? 0 : element.quantity" (change)="updateqty(element.lmeId,'change',this.paginator.pageIndex == 0 ? i  :  i + this.paginator.pageIndex * this.paginator.pageSize)"/>
+            </div>
+            <!-- <button class="circle plus newplus nomobile" *ngIf="data.orderStatus" id="{{ 'plus' + element.lmeId }}" (click)="updateqty(element.lmeId,'add',this.paginator.pageIndex == 0 ? i  :  i + this.paginator.pageIndex * this.paginator.pageSize)"></button> -->
+            <a class="qtychange" *ngIf="data.orderStatus" id="{{ 'plus' + element.lmeId }}" (click)="updateqty(element.lmeId,'add',this.paginator.pageIndex == 0 ? i  :  i + this.paginator.pageIndex * this.paginator.pageSize)"><img src="{{data.assetPath}}images/plus.svg"></a>
+                        </mat-cell>
+                </ng-container>
+                <ng-container matColumnDef="totalCost" >
+                    <mat-header-cell *matHeaderCellDef  >{{ resourceMessage && resourceMessage['TotalCostlbl'] }}  </mat-header-cell>
+                    <mat-cell *matCellDef="let element"  >
+                    <span class="totalcostspan" id="{{ 'totalcost' + element.lmeId }}">
+                        {{element.totalCost == undefined ? 0 : element.totalCost | currency }}
+                    </span> 
+                    </mat-cell>
+                </ng-container>
+        
+        
+        
+            <mat-header-row *matHeaderRowDef="displayedColumns" class="programelement"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;">
+            </mat-row>
+        
+            </mat-table>
+            <mat-paginator style="display: none;"  [pageSizeOptions]="[8]"></mat-paginator>
+            <div class="row" *ngIf="this.dataSource && this.dataSource.data.length>0">
+                <div class="col-12" style="display: flex; justify-content: center;">
+                <div (click)="previousClicked()"><i [ngStyle]="{'color':(startIndex === 1) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(startIndex !== 1) ? 'pointer-class' : ''" class="fa fa-angle-left pagination-icons"></i></div>
+                <div *ngFor="let page of getPageList() let i=index">
+                
+                <div class="pointer-class pagination-item" style="padding: 20px;"  (click)="changePage(page)">
+                    <p style="padding-top: 5px;"  [ngClass]="(page === selectedPage) ? 'selectedPage': ''">{{page}}</p>
+                </div>
+                </div>
+                <div (click)="nextClicked()"><i [ngStyle]="{'color':(endIndex === noOfPages) ? '#C4C4C4' : appCommonFunctions.getTheme() && appCommonFunctions.getTheme().color && appCommonFunctions.getTheme().color.appBackgroundColor ? appCommonFunctions.getTheme().color.appBackgroundColor : '#006ef5' }" [ngClass]="(endIndex !== noOfPages) ? 'pointer-class' : ''" class="fa fa-angle-right pagination-icons"></i></div>
+                </div>
+                <div class="btndiv" *ngIf="this.dataSource && this.dataSource.data.length>0">
+                    <input *ngIf="data.orderStatus" type="button" id="cancel-button" (click)="cancelchanges()"  value="{{ resourceMessage && resourceMessage['CancelChangesBtn'] }}" ng class="btn btn-primary btncancelchanges">
+                    <input *ngIf="data.orderStatus" type="button" id="save-button" (click)="savechanges()" value="{{ resourceMessage && resourceMessage['SaveChangesBtn'] }}" ng class="btn btn-primary btnsavechanges">
+                </div>
+            </div>
+            
+            <div *ngIf="this.dataSource && this.dataSource.data.length==0" class="norecords">{{ resourceMessage &&
+                resourceMessage['Norecordslbl'] }}</div>
+            
+            </div>
+        
+            
+
+    </div>
+
+</div>

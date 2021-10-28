@@ -1,0 +1,37 @@
+@import '../../variable.scss';
+
+.container-fluid {
+    padding-left: 5%;
+    padding-right: 5%;
+    padding-bottom: 5%;
+    min-height: 100vh;
+    margin-bottom: 30px;
+    overflow:hidden;
+    padding-top: 5%;
+}
+#heading-advanced {
+    display: none !important;
+}
+#heading-layout {
+    display: none !important;
+}
+#heading-data {
+    display: none !important; 
+}
+#heading-premium {
+    display: none !important; 
+}
+.btndiv{
+    text-align: right;
+    margin-bottom: 6%;
+}
+.btnsavechanges {
+    height: 45px;
+    width: 160px; 
+    background-color: var(--app-background-color) !important;
+    color: #FFFFFF;
+    font-family: $font-family-bold;
+    font-size: 16px;
+    letter-spacing: 0;
+    line-height: 24px;
+}
